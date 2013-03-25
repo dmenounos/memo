@@ -1,0 +1,140 @@
+html, body {
+	height: 100%;
+}
+
+html body {
+	overflow: hidden;
+	font-size: 0.9em;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #fdfcf8;
+	background-image: url(images/rough/back-10x260.jpg);
+	background-repeat: repeat-x;
+	background-position: top;
+}
+
+span, div, p,
+table tr td {
+	font-size: 1em;
+}
+
+strong, .bold {
+	font-weight: bold;
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.clear {
+	clear: both;
+}
+
+
+
+.headers {
+}
+
+#search {
+	height: 40px;
+	padding-top: 24px;
+}
+
+#search input {
+	width: 210px;
+	padding: 2px 4px;
+	border: 1px dotted #fff;
+	background-color: transparent;
+	color: #fff;
+}
+
+#search input.focus {
+	border: 1px dotted #cccccc;
+	background: #fdfcf8 url(images/search.gif) no-repeat right;	
+	color: #909090;
+}
+
+#menu {
+	height: 32px;
+	padding: 16px 0;
+}
+
+#menu li {
+	float: left;
+	height: 32px;
+	line-height: 32px;
+	padding-left: 40px;
+	margin-right: 20px;
+	background-repeat: no-repeat;
+}
+
+#menu-forum {
+	background-image: url(images/menu/32x32/comments.png);
+}
+
+#menu-users {
+	background-image: url(images/menu/32x32/community_users.png);
+}
+
+#menu-games {
+	background-image: url(images/menu/32x32/card.png);
+}
+
+#menu a {
+	font-weight: bold;
+	color: #fff;
+}
+
+#menu a:hover {
+	color: #ffef6a;
+}
+
+
+
+.footers {
+	position: absolute;
+	bottom: 0;
+	left: 0; right: 0;
+	height: 20px;
+	text-align: center;
+}
+
+
+
+.body {
+	position: absolute;
+	top: 64px; bottom: 20px;
+	left: 0; right: 0;
+	padding: 12px 0;
+}
+
+.content p,
+.content ul,
+.content ol {
+	margin: 10px 0;
+}
+
+.content p,
+.content li {
+	line-height: 1.25;
+}
+
+.content a {
+	color: #fbb023 !important;
+}
+
+.content a:hover {
+	color: #ffc75a !important;
+}
+
+.content a:visited {
+/* 	color: #da991e !important; */
+}
+
+.content a:active {
+	color:#da991e !important;
+}

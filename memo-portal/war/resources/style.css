@@ -1,0 +1,168 @@
+.gwt-PopupPanelGlass {
+/* 	opacity: 0.3; */
+}
+
+.WebDialog .dialogTopCenter {
+	font-weight: bold;
+}
+
+.WebDialog .dialogMiddleCenter {
+	padding: 0;
+}
+
+.WebDialog .dialogContent {
+	padding: 12px;
+}
+
+.gwt-TabPanelBottom {
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 0;
+	padding: 12px 0 0;
+}
+
+.gwt-Button {
+	border-radius: 4px;
+}
+
+
+
+.LoginPanel .centerPanel .gwt-Label {
+	margin-bottom: 2px;
+}
+
+.LoginPanel .centerPanel .username-field,
+.LoginPanel .centerPanel .password-field,
+.LoginPanel .centerPanel .gwt-CheckBox {
+	margin-bottom: 8px;
+	display: block;
+}
+
+.LoginPanel .eastPanel {
+	padding: 12px;
+	margin-left: 24px;
+	border-radius: 10px;
+	background-color: #efefef;
+}
+
+
+
+.OpenIDPanel .centerPanel .gwt-Label {
+	margin-bottom: 2px;
+}
+
+.OpenIDPanel .buttonsPanel button {
+	margin-right: 10px;
+	border: 1px solid #bbb;
+	width: 100px;
+	height: 50px;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.OpenIDPanel .buttonsPanel .googleButton {
+	background-image: url(images/login/google.gif);
+}
+
+.OpenIDPanel .buttonsPanel .yahooButton {
+	background-image: url(images/login/yahoo.gif);
+}
+
+.OpenIDPanel .buttonsPanel .openidButton {
+	background-image: url(images/login/openid.gif);
+}
+
+.OpenIDPanel .formPanel {
+	margin-top: 24px;
+}
+
+.OpenIDPanel .formPanel input {
+	margin-right: 5px;
+	border-radius: 4px;
+	border: 1px solid #bbb;
+	padding: 5px 5px 5px 32px;
+	height: 22px;
+	font-size: 16px;
+	background-image: url(images/login/openid.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.OpenIDPanel .formPanel button {
+	height: 34px;
+	font-size: 16px;
+}
+
+.OpenIDPanel .eastPanel {
+	padding: 12px;
+	margin-left: 24px;
+	border-radius: 10px;
+	background-color: #efefef;
+}
+
+
+
+.ProfilePanel-decor {
+	padding: 6px;
+	border-radius: 6px;
+	background-color: #f3f3f3;
+}
+
+.ProfilePanel-buttons {
+	margin-top: 10px;
+	text-align: right;
+}
+
+.ProfilePanel-buttons button {
+	padding: 2px 12px;
+	margin-left: 10px;
+}
+
+.ProfileForm .gwt-TextBox,
+.ProfileForm .gwt-PasswordTextBox,
+.ProfileForm .gwt-DateBox {
+	width: 180px;
+	padding: 4px;
+	border: 1px solid #999;
+	border-radius: 3px;
+}
+
+.ProfileForm .gwt-ListBox {
+	width: 190px;
+	padding: 4px;
+}
+
+.ProfileForm .gwt-RadioButton {
+	margin-right: 10px;
+}
+
+.ProfileForm .gwt-RadioButton input,
+.ProfileForm .gwt-CheckBox input {
+	margin-right: 2px;
+}
+
+
+
+.ajaxOverlay {
+	display: none;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
+	background-color: #fff;
+	position: fixed;
+	left: 0; top: 0;
+	right: 0; bottom: 0;
+	z-index: 9998;
+}
+
+.ajaxIndicator {
+	width: 64px; height: 64px;
+	background-image: url(images/ajax/clock-64.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+	position: fixed;
+	left: 50%; top: 50%;
+	margin-left: -32px;
+	margin-top: -32px;
+	z-index: 9999; 
+}

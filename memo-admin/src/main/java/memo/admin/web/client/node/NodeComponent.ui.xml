@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:c='urn:import:com.google.gwt.user.cellview.client'>
+
+	<g:DockLayoutPanel unit="PX" styleName="NodeView">
+		<g:west size='200'>
+			<c:CellTree ui:field="cellTree" />
+		</g:west>
+		<g:center>
+			<g:Label>CENTER</g:Label>
+		</g:center>
+	</g:DockLayoutPanel>
+
+</ui:UiBinder>

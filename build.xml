@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="build">
+
+	<path id="gwt.classpath">
+		<path path="${classpath}" />
+		<pathelement location="${src.dir}" />
+	</path>
+
+	<target name="gwt.compile" depends="cache.properties">
+		<mkdir dir="${war.dir}" />
+		<java classname="com.google.gwt.dev.Compiler" fork="true">
+			<classpath refid="gwt.classpath" />
+			<arg line="-war ${war.dir} ${gwt.module} -strict" />
+		</java>
+	</target>
+
+	<target name="gwt.debug" depends="cache.properties">
+		<java classname="com.google.gwt.dev.DevMode" fork="true">
+			<classpath refid="gwt.classpath" />
+			<!-- http://docs.oracle.com/javase/6/docs/technotes/guides/jpda/conninv.html -->
+			<jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=localhost:8000" />
+			<arg line="-war ${war.dir} -noserver -startupUrl ${gwt.url} ${gwt.module}" />
+		</java>
+	</target>
+
+	<target name="cache.properties">
+		<!-- <echo message="${classpath}" /> -->
+		<echo file="build.properties" message="src.dir   = ${src.dir}${line.separator}" />
+		<echo file="build.properties" message="war.dir   = ${war.dir}${line.separator}" append="true" />
+		<echo file="build.properties" message="classpath = ${classpath}${line.separator}" append="true" />
+	</target>
+
+	<target name="jsp.extract">
+		<property file="build.properties" />
+
+		<!-- deployment directory for jsp files -->
+		<mkdir dir="${war.dir}/WEB-INF/jsp" />
+
+		<!-- convert classpath structure to a path string -->
+		<pathconvert property="classpath.string" pathsep=" ">
+			<path path="${classpath}" />
+			<!-- strip the root / -->
+			<map from="/" to="" />
+		</pathconvert>
+
+		<!-- extract from jar files -->
+		<unjar dest="${war.dir}/WEB-INF/jsp">
+			<fileset dir="/" includes="${classpath.string}">
+				<or>
+					<filename name="**/mojo-*.jar" />
+					<filename name="**/memo-*.jar" />
+				</or>
+			</fileset>
+			<patternset>
+				<include name="**/*.jsp" />
+			</patternset>
+		</unjar>
+
+		<!-- extract from sources folder -->
+		<copy todir="${war.dir}/WEB-INF/jsp">
+			<fileset dir="./src/main/java">
+				<include name="**/*.jsp" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>

@@ -1,0 +1,88 @@
+MEMO is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+MEMO is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see: http://www.gnu.org/licenses/
+
+
+
+System requirements
+-------------------
+
+JDK   6   - http://java.sun.com/
+Maven 3.0 - http://maven.apache.org/
+Mojo  1.0 - http://github.com/dmenounos/mojo
+
+
+
+Installing
+----------
+
+Create and populate the basic database schema. See:
+memo-domain/src/db
+
+With the prerequisites in place, execute from the console:
+mvn clean install
+
+
+
+Developing with Eclipse
+-----------------------
+
+1. Create the basic projects with Maven:
+   mvn eclipse:clean eclipse:eclipse
+
+2. Import them into Eclipse:
+   File -> Import -> Existing Projects into Workspace
+
+3. Convert "memo-portal" to a dynamic web project:
+
+   1. From the "Properties" dialog and "Project Facets" panel,
+      check the "Dynamic Web Module" and "Java" facets.
+
+   2. Change the facet version to 2.5, i.e. Java EE 5.
+
+   3. Uncheck the default option that creates a "web.xml" file.
+
+   4. Change the default "WebContent" directory to "war".
+
+4. Open the "Deployment Assembly" panel, in the "Properties" dialog.
+   Normally the following entries should be present by default:
+
+   /war                                            /
+   /src/main/java                                  WEB-INF/classes
+   /src/main/resources                             WEB-INF/classes
+
+   1. Map the, maven resolved, jar dependencies:
+   /out/memo-portal-1.0/WEB-INF/lib                WEB-INF/lib
+
+   2. Map the, maven resolved, jsp files:
+   /out/memo-portal-1.0/WEB-INF/jsp                WEB-INF/jsp
+
+   3. Map the, GWT generated, javascript code:
+   /out/memo-portal-1.0/gwt                        gwt
+
+5. Open the "External Tool Configurations" and create one as such:
+
+   Location:            <MAVEN_INSTALL_PATH>/bin/mvn
+   Working Directory:   ${workspace_loc:/memo-portal}
+   Arguments:           antrun:run
+
+6. Open the "Debug Configurations" and create one as such:
+
+   Project: memo-portal
+
+Finally the following describe the different run and debug options:
+
+*) By starting the configuration #5, you will be able to dynamically change
+   GWT client code, i.e. java classes
+
+*) By starting the configuration #6, you will be able to dynamically debug
+   GWT client code, i.e. java classes.

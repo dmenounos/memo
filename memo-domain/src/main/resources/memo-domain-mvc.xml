@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<import resource="classpath:mojo-web.xml" />
+	<context:component-scan base-package="memo.admin.web" />
+	<context:component-scan base-package="memo.domain.web" />
+	<context:component-scan base-package="memo.portal.web" />
+
+	<!-- VIEW RESOLVERS -->
+
+	<!-- configures tiles -->
+	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- maps view names to tiles definitions -->
+	<bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
+		<property name="order" value="0" />
+	</bean>
+
+	<!-- maps view names to JSP pages (must be last in the resolver chain) -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- maps exception class names to view names -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultStatusCode" value="500" />
+		<property name="defaultErrorView" value="/web/any-exception" />
+		<property name="exceptionMappings">
+			<props>
+				<prop key="mojo.web.core.WebException">/web/web-exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Redefine the default handler mappings / adapters to enable: -->
+	<!-- 1. Dynamic locale resolution through request parameter with session storage. -->
+	<!-- 2. Automatic object conversion through @ResponseBody / @RequestBody annotations. -->
+
+	<!-- <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" /> -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /> -->
+
+	<!-- maps request paths to controller classes -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor" />
+				<bean class="mojo.web.core.WebContextInterceptor" />
+				<bean class="mojo.web.core.RequireLoginInterceptor">
+					<property name="suffix" value=".pro" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- maps request paths to controller methods -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="marshallingHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- changes locale by using a request parameter and the localeResolver bean -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
+	</bean>
+
+	<!-- sets locale in session; used by the localeChangeInterceptor bean -->
+	<!-- gets locale by looking: 1) session attribute 2) request locale property -->
+	<!-- note: standard bean name, defined in org.springframework.web.servlet.DispatcherServlet -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+
+	<bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<property name="unmarshaller" ref="xstreamMarshaller" />
+		<property name="marshaller"   ref="xstreamMarshaller" />
+	</bean>
+
+	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+		<property name="converters">
+			<list>
+				<bean class="mojo.dao.core.util.XHProxyConverter" />
+				<bean class="mojo.dao.core.util.XHCollectionConverter" />
+			</list>
+		</property>
+		<property name="aliases">
+			<map>
+
+				<entry key="DataPage"  value="mojo.dao.core.DataPage" />
+				<entry key="Batch"     value="mojo.dao.core.spec.Batch" />
+				<entry key="ByKey"     value="mojo.dao.core.spec.ByKey" />
+				<entry key="ByText"    value="mojo.dao.core.spec.ByText" />
+				<entry key="Select"    value="mojo.dao.core.spec.Select" />
+				<entry key="Insert"    value="mojo.dao.core.spec.Insert" />
+				<entry key="Update"    value="mojo.dao.core.spec.Update" />
+				<entry key="Delete"    value="mojo.dao.core.spec.Delete" />
+
+				<entry key="Country"   value="memo.domain.dao.model.misc.Country" />
+				<entry key="Language"  value="memo.domain.dao.model.misc.Language" />
+				<entry key="Node"      value="memo.domain.dao.model.node.Node" />
+				<entry key="NodeInfo"  value="memo.domain.dao.model.node.NodeInfo" />
+				<entry key="NodeRule"  value="memo.domain.dao.model.node.NodeRule" />
+				<entry key="Post"      value="memo.domain.dao.model.post.Post" />
+				<entry key="OpenID"    value="memo.domain.dao.model.user.OpenID" />
+				<entry key="User"      value="memo.domain.dao.model.user.User" />
+				<entry key="UserGroup" value="memo.domain.dao.model.user.UserGroup" />
+
+			</map>
+		</property>
+	</bean>
+
+</beans>

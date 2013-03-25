@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:s="urn:import:memo.portal.web.client.login">
+
+	<ui:with field='msg' type='memo.portal.web.client.login.OpenIDPanel.Messages' />
+
+	<g:DockPanel styleName="OpenIDPanel content">
+		<g:Dock direction="CENTER">
+
+			<g:FlowPanel styleName="centerPanel">
+				<g:Label text="{msg.buttonsLabel}" />
+				<g:FlowPanel styleName="buttonsPanel">
+					<g:Button ui:field="googleButton" title="Google" />
+					<g:Button ui:field="yahooButton" title="Yahoo" />
+					<g:Button ui:field="openidButton" title="OpenID" />
+				</g:FlowPanel>
+				<g:FlowPanel ui:field="formPanel" styleName="formPanel">
+					<g:Label text="{msg.openidLabel}" />
+					<g:TextBox ui:field="urlField" />
+					<g:Button ui:field="submitButton" text="Login" />
+				</g:FlowPanel>
+			</g:FlowPanel>
+
+		</g:Dock>
+		<g:Dock direction="EAST" width="300px">
+
+			<g:FlowPanel ui:field="eastPanel" styleName="eastPanel">
+				<g:HTML HTML="{msg.openidInfo}" />
+			</g:FlowPanel>
+
+		</g:Dock>
+	</g:DockPanel>
+
+</ui:UiBinder>
