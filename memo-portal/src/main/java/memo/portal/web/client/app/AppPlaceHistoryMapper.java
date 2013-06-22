@@ -21,8 +21,6 @@ import com.google.gwt.place.shared.WithTokenizers;
 
 import mojo.gwt.ui.client.activity.page.PageActivity.PageTokenizer;
 
-import memo.portal.web.client.profile.ProfileActivity.ProfileTokenizer;
-
-@WithTokenizers({ ProfileTokenizer.class, PageTokenizer.class })
+@WithTokenizers({ PageTokenizer.class })
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper {
 }

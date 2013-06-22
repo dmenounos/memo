@@ -24,9 +24,6 @@ import mojo.gwt.ui.client.activity.ClientFactory;
 import mojo.gwt.ui.client.activity.page.PageActivity;
 import mojo.gwt.ui.client.activity.page.PageActivity.PagePlace;
 
-import memo.portal.web.client.profile.ProfileActivity;
-import memo.portal.web.client.profile.ProfileActivity.ProfilePlace;
-
 public class AppActivityMapper implements ActivityMapper {
 
 	private ClientFactory clientFactory;
@@ -40,11 +37,6 @@ public class AppActivityMapper implements ActivityMapper {
 		if (place instanceof PagePlace) {
 			PagePlace contentPlace = (PagePlace) place;
 			return new PageActivity(clientFactory, contentPlace);
-		}
-
-		if (place instanceof ProfilePlace) {
-			ProfilePlace profilePlace = (ProfilePlace) place;
-			return new ProfileActivity(clientFactory, profilePlace);
 		}
 
 		return null;

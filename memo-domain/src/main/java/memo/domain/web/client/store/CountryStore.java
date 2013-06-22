@@ -26,7 +26,7 @@ import memo.domain.web.client.model.CountryModel;
 public class CountryStore extends HttpSource<CountryModel> {
 
 	public CountryStore() {
-		super(GWT.getModuleBaseURL() + "../app/user/country");
+		super(GWT.getModuleBaseURL() + "../app/misc/country");
 		setReader(XmlReader.create(CountryModel.TYPE, "Country"));
 	}
 }
