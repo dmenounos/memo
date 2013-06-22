@@ -113,9 +113,10 @@
 				<entry key="NodeInfo"  value="memo.domain.dao.model.node.NodeInfo" />
 				<entry key="NodeRule"  value="memo.domain.dao.model.node.NodeRule" />
 				<entry key="Post"      value="memo.domain.dao.model.post.Post" />
+				<entry key="PostRule"  value="memo.domain.dao.model.post.PostRule" />
 				<entry key="OpenID"    value="memo.domain.dao.model.user.OpenID" />
 				<entry key="User"      value="memo.domain.dao.model.user.User" />
-				<entry key="UserGroup" value="memo.domain.dao.model.user.UserGroup" />
+				<entry key="UserRole"  value="memo.domain.dao.model.user.UserRole" />
 
 			</map>
 		</property>

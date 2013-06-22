@@ -30,7 +30,7 @@ public class PostRuleValidation extends Validation<PostRule> {
 			return;
 		}
 
-		checkNull(entity.getPost(), errors, "PostRule.node.null");
-		checkNull(entity.getUserRole(), errors, "PostRule.userGroup.null");
+		checkNull(entity.getPost(), errors, "PostRule.post.null");
+		checkNull(entity.getUserRole(), errors, "PostRule.userRole.null");
 	}
 }
