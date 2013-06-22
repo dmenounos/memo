@@ -25,7 +25,7 @@ import memo.domain.dao.model.misc.Country;
 import memo.domain.dao.model.misc.Language;
 import memo.domain.dao.model.user.OpenID;
 import memo.domain.dao.model.user.User;
-import memo.domain.dao.model.user.UserGroup;
+import memo.domain.dao.model.user.UserRole;
 
 @Service
 public class LoginService {
@@ -37,8 +37,8 @@ public class LoginService {
 		user.setSignUpTime(new Date());
 		loginRepository.createUser(user);
 
-		for (UserGroup group : user.getGroups()) {
-			loginRepository.createUserGroup(group);
+		for (UserRole group : user.getRoles()) {
+			loginRepository.createUserRole(group);
 		}
 	}
 

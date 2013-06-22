@@ -62,7 +62,7 @@ public class User extends AbstractEntity {
 	private Date signInTime;
 
 	private List<OpenID> openIDs;
-	private List<UserGroup> groups;
+	private List<UserRole> roles;
 
 	@Column(nullable = false)
 	public String getEmail() {
@@ -194,15 +194,15 @@ public class User extends AbstractEntity {
 	}
 
 	@ManyToMany(mappedBy = "users")
-	public List<UserGroup> getGroups() {
-		if (groups == null) {
-			groups = new ArrayList<UserGroup>();
+	public List<UserRole> getRoles() {
+		if (roles == null) {
+			roles = new ArrayList<UserRole>();
 		}
 
-		return groups;
+		return roles;
 	}
 
-	public void setGroups(List<UserGroup> groups) {
-		this.groups = groups;
+	public void setRoles(List<UserRole> groups) {
+		this.roles = groups;
 	}
 }

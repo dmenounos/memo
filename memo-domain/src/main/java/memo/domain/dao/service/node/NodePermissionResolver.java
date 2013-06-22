@@ -33,22 +33,22 @@ import memo.domain.dao.model.Permissions;
 import memo.domain.dao.model.node.Node;
 import memo.domain.dao.model.node.NodeRule;
 import memo.domain.dao.model.user.User;
-import memo.domain.dao.model.user.UserGroup;
-import memo.domain.dao.service.PermissionRsolver;
+import memo.domain.dao.model.user.UserRole;
+import memo.domain.dao.service.PermissionResolver;
 
 @Component
-public class NodePermissionResolver extends PermissionRsolver {
-
-	@Autowired
-	@Qualifier("nodeRuleService")
-	private DataService<NodeRule> nodeRuleService;
+public class NodePermissionResolver extends PermissionResolver {
 
 	@Autowired
 	@Qualifier("auditContext")
 	private AuditContext auditContext;
 
+	@Autowired
+	@Qualifier("nodeRuleService")
+	private DataService<NodeRule> nodeRuleService;
+
 	@Override
-	protected int resolveRulesAccess(Permissions entity) {
+	protected int resolveRulePermissions(Permissions entity) {
 		if (entity instanceof Node) {
 			Node node = (Node) entity;
 			User user = (User) auditContext.getUser();
@@ -60,14 +60,14 @@ public class NodePermissionResolver extends PermissionRsolver {
 				DataPage<NodeRule> dataPage = nodeRuleService.select(select);
 				List<NodeRule> nodeRules = dataPage.getData();
 
-				// get user groups for current user
-				List<UserGroup> userGroups = user.getGroups();
+				// get user roles for current user
+				List<UserRole> userRoles = user.getRoles();
 
 				for (NodeRule nodeRule : nodeRules) {
-					UserGroup nodeGroup = nodeRule.getGroup();
+					UserRole nodeRole = nodeRule.getUserRole();
 
-					for (UserGroup userGroup : userGroups) {
-						if (EntityUtils.equals(nodeGroup, userGroup)) {
+					for (UserRole userRole : userRoles) {
+						if (EntityUtils.equals(nodeRole, userRole)) {
 							return nodeRule.getPermissions();
 						}
 					}

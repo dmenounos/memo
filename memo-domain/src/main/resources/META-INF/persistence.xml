@@ -16,7 +16,7 @@
 		<class>memo.domain.dao.model.post.Post</class>
 		<class>memo.domain.dao.model.user.OpenID</class>
 		<class>memo.domain.dao.model.user.User</class>
-		<class>memo.domain.dao.model.user.UserGroup</class>
+		<class>memo.domain.dao.model.user.UserRole</class>
 
 		<exclude-unlisted-classes />
 

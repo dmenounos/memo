@@ -29,27 +29,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import memo.domain.dao.model.AbstractRule;
+import memo.domain.dao.model.AuditableRule;
 import memo.domain.dao.model.Hierarchical;
 
 @Entity
 @Table(name = "memo_node")
-public class Node extends AbstractRule implements Hierarchical {
+public class Node extends AuditableRule implements Hierarchical {
 
 	private static final long serialVersionUID = 1L;
 
 	private String code;
-	private String action;
+	private String urlCode;
+	private String actionCode;
 
 	private Node parentNode;
 	private Map<String, Node> childNodes;
 
 	private boolean leaf;
 	private boolean hidden;
-
-	public Node() {
-		leaf = true;
-	}
 
 	/**
 	 * Unique code identifier, <br>
@@ -65,14 +62,25 @@ public class Node extends AbstractRule implements Hierarchical {
 	}
 
 	/**
-	 * System action identifier.
+	 * Unique url identifier.
 	 */
-	public String getAction() {
-		return action;
+	public String getUrlCode() {
+		return urlCode;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setUrlCode(String urlCode) {
+		this.urlCode = urlCode;
+	}
+
+	/**
+	 * System action identifier.
+	 */
+	public String getActionCode() {
+		return actionCode;
+	}
+
+	public void setActionCode(String actionCode) {
+		this.actionCode = actionCode;
 	}
 
 	/**

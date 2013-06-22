@@ -236,6 +236,7 @@ public class NodeTest extends BaseTest {
 
 	protected static void assertValidNode(Node node) {
 		assertNotNull("null node", node);
+		assertNotNull("null node.id", node.getId());
 	}
 
 	protected static void assertEqualNodes(Node exp, Node act) {

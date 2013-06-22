@@ -22,18 +22,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import memo.domain.dao.model.AbstractRule;
-import memo.domain.dao.model.user.UserGroup;
+import memo.domain.dao.model.AuditableRule;
+import memo.domain.dao.model.user.UserRole;
 
 @Entity
 @Table(name = "memo_node_rule")
-public class NodeRule extends AbstractRule {
+public class NodeRule extends AuditableRule {
 
 	private static final long serialVersionUID = 1L;
 
 	private int pos;
 	private Node node;
-	private UserGroup group;
+	private UserRole userRole;
 
 	public int getPos() {
 		return pos;
@@ -55,11 +55,11 @@ public class NodeRule extends AbstractRule {
 
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public UserGroup getGroup() {
-		return group;
+	public UserRole getUserRole() {
+		return userRole;
 	}
 
-	public void setGroup(UserGroup group) {
-		this.group = group;
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 }

@@ -51,7 +51,8 @@ public class PostTest extends BaseTest {
 		sb.append("Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ");
 		sb.append("Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
-		postContent = sb.toString();
+		// postContent = sb.toString();
+		postContent = sb.substring(0, 255);
 	}
 
 	public void testCRUD() {
@@ -72,16 +73,14 @@ public class PostTest extends BaseTest {
 
 	private Post createPost() {
 		Post post = new Post();
-		post.setTitle(postTitle);
-		post.setContent(postContent);
+		post.setCode(postTitle);
+		post.setActionCode(postContent);
 		return post;
 	}
 
 	protected static void assertValidPost(Post post) {
 		assertNotNull("null post", post);
 		assertNotNull("null post.id", post.getId());
-		assertNotNull("null post.title", post.getTitle());
-		assertNotNull("null post.content", post.getContent());
 	}
 
 	protected static void assertEqualPosts(Post exp, Post act) {
@@ -91,8 +90,8 @@ public class PostTest extends BaseTest {
 		else {
 			assertNotNull("null post", act);
 			assertEquals("incorrect post.id", exp.getId(), act.getId());
-			assertEquals("incorrect post.title", exp.getTitle(), act.getTitle());
-			assertEquals("incorrect post.content", exp.getContent(), act.getContent());
+			assertEquals("incorrect post.code", exp.getCode(), act.getCode());
+			assertEquals("incorrect post.permissions", exp.getPermissions(), act.getPermissions());
 			BaseTest.assertEqualEntities(exp.getCreateUser(), act.getCreateUser());
 		}
 	}

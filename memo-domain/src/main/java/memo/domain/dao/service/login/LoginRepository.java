@@ -28,7 +28,7 @@ import memo.domain.dao.model.misc.Country;
 import memo.domain.dao.model.misc.Language;
 import memo.domain.dao.model.user.OpenID;
 import memo.domain.dao.model.user.User;
-import memo.domain.dao.model.user.UserGroup;
+import memo.domain.dao.model.user.UserRole;
 
 @Repository
 public class LoginRepository {
@@ -40,8 +40,8 @@ public class LoginRepository {
 		entityManager.persist(user);
 	}
 
-	public void createUserGroup(UserGroup userGroup) {
-		entityManager.persist(userGroup);
+	public void createUserRole(UserRole userRole) {
+		entityManager.persist(userRole);
 	}
 
 	public void createOpenID(OpenID openID) {

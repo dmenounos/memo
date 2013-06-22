@@ -21,7 +21,7 @@ import java.util.Date;
 import mojo.dao.AuditContext;
 
 import memo.domain.dao.model.user.User;
-import memo.domain.dao.model.user.UserGroup;
+import memo.domain.dao.model.user.UserRole;
 
 public class MockContext implements AuditContext {
 
@@ -44,10 +44,10 @@ public class MockContext implements AuditContext {
 	}
 
 	protected void initGroup(String name) {
-		UserGroup group = new UserGroup();
+		UserRole group = new UserRole();
 		group.setName(name);
 		group.getUsers().add(user);
-		user.getGroups().add(group);
+		user.getRoles().add(group);
 	}
 
 	@Override

@@ -30,7 +30,6 @@ public class PostValidation extends Validation<Post> {
 			return;
 		}
 
-		checkEmpty(entity.getTitle(), errors, "Post.title.empty");
-		checkEmpty(entity.getContent(), errors, "Post.content.empty");
+		checkEmpty(entity.getCode(), errors, "Post.code.empty");
 	}
 }

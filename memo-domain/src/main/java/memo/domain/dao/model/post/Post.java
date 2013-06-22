@@ -23,52 +23,64 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import memo.domain.dao.model.AuditableEntity;
+import memo.domain.dao.model.AuditableRule;
 import memo.domain.dao.model.Hierarchical;
 
 @Entity
 @Table(name = "memo_post")
-public class Post extends AuditableEntity implements Hierarchical {
+public class Post extends AuditableRule implements Hierarchical {
 
 	private static final long serialVersionUID = 1L;
 
-	private String title;
-	private String content;
+	private String code;
+	private String urlCode;
+	private String actionCode;
 
 	private Post parentNode;
 	private List<Post> childNodes;
-	private boolean terminal;
+
+	private boolean leaf;
 	private boolean hidden;
 
-	public Post() {
-		terminal = true;
-	}
-
+	/**
+	 * Unique code identifier, <br>
+	 * relative to the parent context.
+	 */
 	@Column(nullable = false)
-	public String getTitle() {
-		return title;
+	public String getCode() {
+		return code;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	@Lob
-	@Column(length = Short.MAX_VALUE)
-	// http://opensource.atlassian.com/projects/hibernate/browse/HHH-2614
-	public String getContent() {
-		return content;
+	/**
+	 * Unique url identifier.
+	 */
+	public String getUrlCode() {
+		return urlCode;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setUrlCode(String urlCode) {
+		this.urlCode = urlCode;
+	}
+
+	/**
+	 * System action identifier.
+	 */
+	public String getActionCode() {
+		return actionCode;
+	}
+
+	public void setActionCode(String actionCode) {
+		this.actionCode = actionCode;
 	}
 
 	/**
@@ -117,20 +129,20 @@ public class Post extends AuditableEntity implements Hierarchical {
 	/**
 	 * Helper method.
 	 */
-	public Post createChildNode(String title) {
+	public Post createChildNode(String code) {
 		Post node = new Post();
 		getChildNodes().add(node);
 		node.setParentNode(this);
-		node.setTitle(title);
+		node.setCode(code);
 		return node;
 	}
 
-	public boolean isTerminal() {
-		return terminal;
+	public boolean isLeaf() {
+		return leaf;
 	}
 
-	public void setTerminal(boolean terminal) {
-		this.terminal = terminal;
+	public void setLeaf(boolean leaf) {
+		this.leaf = leaf;
 	}
 
 	public boolean isHidden() {

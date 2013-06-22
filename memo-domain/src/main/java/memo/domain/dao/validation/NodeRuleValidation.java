@@ -31,6 +31,6 @@ public class NodeRuleValidation extends Validation<NodeRule> {
 		}
 
 		checkNull(entity.getNode(), errors, "NodeRule.node.null");
-		checkNull(entity.getGroup(), errors, "NodeRule.userGroup.null");
+		checkNull(entity.getUserRole(), errors, "NodeRule.userGroup.null");
 	}
 }
