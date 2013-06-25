@@ -14,6 +14,7 @@
 		<class>memo.domain.dao.model.node.NodeInfo</class>
 		<class>memo.domain.dao.model.node.NodeRule</class>
 		<class>memo.domain.dao.model.post.Post</class>
+		<class>memo.domain.dao.model.post.PostRule</class>
 		<class>memo.domain.dao.model.user.OpenID</class>
 		<class>memo.domain.dao.model.user.User</class>
 		<class>memo.domain.dao.model.user.UserRole</class>

@@ -22,12 +22,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import memo.domain.dao.model.AuditableRule;
+import memo.domain.dao.model.core.Permissions;
 import memo.domain.dao.model.user.UserRole;
 
 @Entity
 @Table(name = "memo_node_rule")
-public class NodeRule extends AuditableRule {
+public class NodeRule extends Permissions {
 
 	private static final long serialVersionUID = 1L;
 

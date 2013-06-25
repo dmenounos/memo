@@ -28,12 +28,14 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import mojo.dao.core.DataService;
 import mojo.dao.core.Repository;
 import mojo.dao.core.spec.Delete;
 import mojo.dao.core.spec.Insert;
 
-import memo.domain.dao.model.Permissions;
+import memo.domain.dao.model.core.Permissions;
 import memo.domain.dao.model.node.Node;
+import memo.domain.dao.model.node.NodeRule;
 import memo.domain.dao.service.node.NodeService;
 import memo.domain.test.BaseTest;
 
@@ -42,12 +44,14 @@ public class NodeTest extends BaseTest {
 	// used to persist the root node
 	private Repository<Node> nodeRepository;
 
+	private DataService<NodeRule> nodeRuleService;
 	private NodeService nodeService;
 	private Node rootNode;
 
 	protected NodeTest(String name) {
 		super(name);
 
+		nodeRuleService = getBean("nodeRuleService");
 		nodeRepository = getBean("nodeRepository");
 		nodeService = getBean("nodeService");
 	}
@@ -58,7 +62,6 @@ public class NodeTest extends BaseTest {
 
 		rootNode = new Node();
 		rootNode.setCode("root");
-		rootNode.setPermissions(Permissions.ALL);
 
 		TransactionTemplate template = createTransactionTemplate();
 		template.execute(new TransactionCallback<Object>() {
@@ -85,51 +88,29 @@ public class NodeTest extends BaseTest {
 	}
 
 	public void testRootCRUD() {
-		Exception exception = null;
-		Node rootNode = null;
+		log("Creating rootNode");
+		Node node = new Node();
+		node.setCode("alt-root-node");
+		nodeService.insert(node);
 
-		try {
-			log("Creating rootNode");
-			rootNode = new Node();
-			rootNode.setCode("alt-root-node");
-			rootNode.setPermissions(Permissions.ALL);
-			nodeService.insert(rootNode);
-		}
-		catch (Exception e) {
-			exception = e;
-		}
-		finally {
-			assertNull("root creation should be allowed", exception);
-		}
+		log("Retrieving rootNode #" + node.getId());
+		Node loadedNode = nodeService.findById(node.getId());
+		assertEqualNodes(node, loadedNode);
 
-		try {
-			log("Modifying rootNode #" + rootNode.getId());
-			rootNode.setCode("modified-root-node");
-			rootNode = nodeService.update(rootNode);
-		}
-		catch (Exception e) {
-			exception = e;
-		}
-		finally {
-			assertNull("root modification should be allowed", exception);
-		}
+		log("Modifying rootNode #" + node.getId());
+		node.setCode("modified-alt-root-node");
+		Node updatedNode = nodeService.update(node);
+		assertEqualNodes(node, updatedNode);
 
-		try {
-			log("Deleting rootNode #" + rootNode.getId());
-			nodeService.delete(rootNode.getId());
-		}
-		catch (Exception e) {
-			exception = e;
-		}
-		finally {
-			assertNull("root deletion should be allowed", exception);
-		}
+		log("Deleting rootNode #" + node.getId());
+		nodeService.delete(node.getId());
+		node = nodeService.findById(node.getId());
+		assertNull("not null node after delete", node);
 	}
 
 	public void testNodeCRUD() {
 		log("Creating node");
 		Node node = rootNode.createChildNode("child-node");
-		node.setPermissions(Permissions.ALL);
 		node = nodeService.insert(node);
 		assertValidNode(node);
 
@@ -149,18 +130,22 @@ public class NodeTest extends BaseTest {
 	}
 
 	public void testNodeRules() {
-		log("Creating folder with all rules");
+		log("Creating folder without permissions");
 		Node folder = rootNode.createChildNode("folder");
-		folder.setPermissions(Permissions.ALL);
 		folder = nodeService.insert(folder);
 
 		log("Retrieving folder #" + folder.getId());
 		Node loadedFolder = nodeService.findById(folder.getId());
 		assertEqualNodes(folder, loadedFolder);
 
-		log("Creating file with no rules");
+		log("Creating file with none permissions");
 		Node file = folder.createChildNode("file");
 		file = nodeService.insert(file);
+
+		NodeRule fileRule = file.createNodeRule();
+		fileRule.setUserRole(getDefaultUserRole(0));
+		fileRule.setPermissions(Permissions.NONE);
+		nodeRuleService.insert(fileRule);
 
 		Exception exception = null;
 
@@ -184,6 +169,7 @@ public class NodeTest extends BaseTest {
 			exception = e;
 		}
 		finally {
+			if (exception != null) logger.error("ERROR", exception);
 			assertNull("folder modification should be allowed", exception);
 			exception = null;
 		}
@@ -208,6 +194,7 @@ public class NodeTest extends BaseTest {
 			exception = e;
 		}
 		finally {
+			if (exception != null) logger.error("ERROR", exception);
 			assertNull("folder deletion should be allowed", exception);
 			exception = null;
 		}
@@ -247,7 +234,6 @@ public class NodeTest extends BaseTest {
 			assertNotNull("null node", act);
 			assertEquals("incorrect node.id", exp.getId(), act.getId());
 			assertEquals("incorrect node.code", exp.getCode(), act.getCode());
-			assertEquals("incorrect node.permissions", exp.getPermissions(), act.getPermissions());
 			assertEqualEntities(exp.getParentNode(), act.getParentNode());
 		}
 	}

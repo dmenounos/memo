@@ -21,7 +21,6 @@ import java.util.Date;
 import mojo.dao.AuditContext;
 
 import memo.domain.dao.model.user.User;
-import memo.domain.dao.model.user.UserRole;
 
 public class MockContext implements AuditContext {
 
@@ -39,15 +38,8 @@ public class MockContext implements AuditContext {
 		user.setPassword("J+A=LFE");
 		user.setSignUpTime(new Date());
 
-		initGroup("Star Sheriffs");
-		initGroup("Outriders");
-	}
-
-	protected void initGroup(String name) {
-		UserRole group = new UserRole();
-		group.setName(name);
-		group.getUsers().add(user);
-		user.getRoles().add(group);
+		user.addRole("Star Sheriff");
+		user.addRole("Outrider");
 	}
 
 	@Override

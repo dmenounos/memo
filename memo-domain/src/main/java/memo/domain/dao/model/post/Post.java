@@ -20,76 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import memo.domain.dao.model.AuditableRule;
-import memo.domain.dao.model.Hierarchical;
+import memo.domain.dao.model.core.Resource;
 
 @Entity
 @Table(name = "memo_post")
-public class Post extends AuditableRule implements Hierarchical {
+public class Post extends Resource {
 
 	private static final long serialVersionUID = 1L;
 
-	private String code;
-	private String urlCode;
-	private String actionCode;
-
 	private Post parentNode;
 	private List<Post> childNodes;
-
-	private boolean leaf;
-	private boolean hidden;
-
-	/**
-	 * Unique code identifier, <br>
-	 * relative to the parent context.
-	 */
-	@Column(nullable = false)
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	/**
-	 * Unique url identifier.
-	 */
-	public String getUrlCode() {
-		return urlCode;
-	}
-
-	public void setUrlCode(String urlCode) {
-		this.urlCode = urlCode;
-	}
-
-	/**
-	 * System action identifier.
-	 */
-	public String getActionCode() {
-		return actionCode;
-	}
-
-	public void setActionCode(String actionCode) {
-		this.actionCode = actionCode;
-	}
-
-	/**
-	 * Helper method.
-	 */
-	@Transient
-	public boolean isRoot() {
-		return getParentNode() == null;
-	}
+	private List<PostRule> postRules;
 
 	/**
 	 * The hierarchical parent.
@@ -137,19 +85,27 @@ public class Post extends AuditableRule implements Hierarchical {
 		return node;
 	}
 
-	public boolean isLeaf() {
-		return leaf;
+	@OrderBy("pos")
+	@OneToMany(mappedBy = "post",
+	cascade = { CascadeType.REMOVE })
+	public List<PostRule> getPostRules() {
+		if (postRules == null) {
+			postRules = new ArrayList<PostRule>();
+		}
+
+		return postRules;
 	}
 
-	public void setLeaf(boolean leaf) {
-		this.leaf = leaf;
+	public void setPostRules(List<PostRule> postRules) {
+		this.postRules = postRules;
 	}
 
-	public boolean isHidden() {
-		return hidden;
-	}
-
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
+	/**
+	 * Helper method.
+	 */
+	public PostRule createPostRule() {
+		PostRule nodeRule = new PostRule();
+		nodeRule.setPost(this);
+		return nodeRule;
 	}
 }

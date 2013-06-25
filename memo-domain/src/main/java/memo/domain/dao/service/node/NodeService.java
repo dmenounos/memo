@@ -28,7 +28,7 @@ public class NodeService extends DataService<Node> {
 
 	@Autowired
 	@Qualifier("nodePermissionResolver")
-	private NodePermissionResolver permissionRsolver;
+	private NodePermissionResolver permissionResolver;
 
 	@Override
 	protected void beforeInsert(Node node) {
@@ -56,14 +56,14 @@ public class NodeService extends DataService<Node> {
 			serverParent = serverNode.getParentNode();
 
 			// check parent node permission
-			if (serverParent != null && !permissionRsolver.hasWriteAccess(serverParent)) {
+			if (serverParent != null && !permissionResolver.hasWriteAccess(serverParent)) {
 				StringBuilder sb = new StringBuilder("Parent node permission violation;");
 				sb.append(" #" + serverParent.getId() + " " + serverParent.getCode());
 				throw new DataException(sb.toString());
 			}
 
 			// check node permission
-			if (!permissionRsolver.hasWriteAccess(serverNode)) {
+			if (!permissionResolver.hasWriteAccess(serverNode)) {
 				StringBuilder sb = new StringBuilder("Node permission violation;");
 				sb.append(" #" + serverNode.getId() + " " + serverNode.getCode());
 				throw new DataException(sb.toString());
@@ -97,7 +97,7 @@ public class NodeService extends DataService<Node> {
 				}
 
 				// check parent node permission
-				if (!permissionRsolver.hasWriteAccess(serverParent)) {
+				if (!permissionResolver.hasWriteAccess(serverParent)) {
 					StringBuilder sb = new StringBuilder("Parent node permission violation;");
 					sb.append(" #" + serverParent.getId() + " " + serverParent.getCode());
 					throw new DataException(sb.toString());

@@ -13,26 +13,19 @@ create table memo_node (
 	createUser_id       int,
 	updateDate          datetime,
 	updateUser_id       int,
---	AuditableRule
-	permissions         int not null,
---	Node
+--	Resource
 	code                varchar(255) not null,
-	urlCode             varchar(255),
-	actionCode          varchar(255),
-	parentNode_id       int,
+	hint                varchar(255),
 	leaf                bit not null,
-	hidden              bit not null
+	hidden              bit not null,
+--	Node
+	parentNode_id       int
 ) engine=InnoDB;
 
 create table memo_node_rule (
 --	AbstractEntity
 	id                  int not null auto_increment primary key,
---	AuditableEntity
-	createDate          datetime,
-	createUser_id       int,
-	updateDate          datetime,
-	updateUser_id       int,
---	AuditableRule
+--	Permissions
 	permissions         int not null,
 --	NodeRule
 	pos                 int not null,
@@ -48,26 +41,19 @@ create table memo_post (
 	createUser_id       int,
 	updateDate          datetime,
 	updateUser_id       int,
---	AuditableRule
-	permissions         int not null,
---	Post
+--	Resource
 	code                varchar(255) not null,
-	urlCode             varchar(255),
-	actionCode          varchar(255),
-	parentNode_id       int,
+	hint                varchar(255),
 	leaf                bit not null,
-	hidden              bit not null
+	hidden              bit not null,
+--	Post
+	parentNode_id       int
 ) engine=InnoDB;
 
 create table memo_post_rule (
 --	AbstractEntity
 	id                  int not null auto_increment primary key,
---	AuditableEntity
-	createDate          datetime,
-	createUser_id       int,
-	updateDate          datetime,
-	updateUser_id       int,
---	AuditableRule
+--	Permissions
 	permissions         int not null,
 --	PostRule
 	pos                 int not null,
@@ -147,10 +133,6 @@ alter table memo_node add index       (parentNode_id);
 alter table memo_node add foreign key (parentNode_id) references memo_node(id) on delete cascade;
 alter table memo_node add unique key  (parentNode_id, code);
 
-alter table memo_node_rule add index       (createUser_id);
-alter table memo_node_rule add foreign key (createUser_id) references memo_user(id) on delete set null;
-alter table memo_node_rule add index       (updateUser_id);
-alter table memo_node_rule add foreign key (updateUser_id) references memo_user(id) on delete set null;
 alter table memo_node_rule add index       (node_id);
 alter table memo_node_rule add foreign key (node_id) references memo_node(id) on delete cascade;
 alter table memo_node_rule add index       (userRole_id);
@@ -166,10 +148,6 @@ alter table memo_post add index       (parentNode_id);
 alter table memo_post add foreign key (parentNode_id) references memo_node(id) on delete cascade;
 alter table memo_post add unique key  (parentNode_id, code);
 
-alter table memo_post_rule add index       (createUser_id);
-alter table memo_post_rule add foreign key (createUser_id) references memo_user(id) on delete set null;
-alter table memo_post_rule add index       (updateUser_id);
-alter table memo_post_rule add foreign key (updateUser_id) references memo_user(id) on delete set null;
 alter table memo_post_rule add index       (post_id);
 alter table memo_post_rule add foreign key (post_id) references memo_post(id) on delete cascade;
 alter table memo_post_rule add index       (userRole_id);

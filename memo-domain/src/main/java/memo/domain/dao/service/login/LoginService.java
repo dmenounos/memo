@@ -37,8 +37,8 @@ public class LoginService {
 		user.setSignUpTime(new Date());
 		loginRepository.createUser(user);
 
-		for (UserRole group : user.getRoles()) {
-			loginRepository.createUserRole(group);
+		for (UserRole role : user.getRoles()) {
+			loginRepository.createUserRole(role);
 		}
 	}
 

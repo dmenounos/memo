@@ -16,49 +16,42 @@
  */
 package memo.domain.dao.service;
 
-import memo.domain.dao.model.Permissions;
+import java.util.Collections;
+import java.util.List;
 
-public class PermissionResolver {
+import memo.domain.dao.model.AbstractEntity;
+import memo.domain.dao.model.core.Permissions;
 
-	public boolean hasReadAccess(Permissions entity) {
+public class PermissionResolver<E extends AbstractEntity, P extends Permissions> {
+
+	public boolean hasReadAccess(E entity) {
 		return hasAccess(entity, Permissions.READ);
 	}
 
-	public boolean hasWriteAccess(Permissions entity) {
+	public boolean hasWriteAccess(E entity) {
 		return hasAccess(entity, Permissions.WRITE);
 	}
 
-	public boolean hasExecuteAccess(Permissions entity) {
+	public boolean hasExecuteAccess(E entity) {
 		return hasAccess(entity, Permissions.EXECUTE);
 	}
 
-	protected boolean hasAccess(Permissions entity, int access) {
-		int defaultAccess = resolvePermissions(entity);
+	protected boolean hasAccess(E entity, int access) {
+		List<P> entityPermissionsList = getEntityPermissionsList(entity.getId());
 
-		if (access == (defaultAccess & access)) {
-			return true;
+		if (entityPermissionsList != null && !entityPermissionsList.isEmpty()) {
+			int actorPermissions = resolveActorPermissions(entityPermissionsList);
+			return access == (actorPermissions & access);
 		}
 
-		int ruleAccess = resolveRulePermissions(entity);
-
-		if (access == (ruleAccess & access)) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
-	/**
-	 * Resolve default access for entity.
-	 */
-	protected int resolvePermissions(Permissions entity) {
-		return entity.getPermissions();
+	protected List<P> getEntityPermissionsList(Object entityId) {
+		return Collections.emptyList();
 	}
 
-	/**
-	 * Resolve rule based access for entity.
-	 */
-	protected int resolveRulePermissions(Permissions entity) {
+	protected int resolveActorPermissions(List<P> permissions) {
 		return Permissions.NONE;
 	}
 }

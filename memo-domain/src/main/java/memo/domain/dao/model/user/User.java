@@ -205,4 +205,15 @@ public class User extends AbstractEntity {
 	public void setRoles(List<UserRole> groups) {
 		this.roles = groups;
 	}
+
+	/**
+	 * Helper method.
+	 */
+	public UserRole addRole(String name) {
+		UserRole role = new UserRole();
+		role.getUsers().add(this);
+		getRoles().add(role);
+		role.setName(name);
+		return role;
+	}
 }

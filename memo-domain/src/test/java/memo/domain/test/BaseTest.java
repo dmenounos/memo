@@ -34,6 +34,7 @@ import mojo.dao.core.Repository;
 
 import memo.domain.dao.model.AbstractEntity;
 import memo.domain.dao.model.user.User;
+import memo.domain.dao.model.user.UserRole;
 import memo.domain.dao.service.login.LoginService;
 import memo.domain.test.util.SpringUtils;
 
@@ -41,13 +42,13 @@ public abstract class BaseTest extends TestCase {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-	protected PlatformTransactionManager transactionManager;
-	protected ApplicationContext appContext;
+	protected final PlatformTransactionManager transactionManager;
+	protected final ApplicationContext appContext;
 
-	protected Repository<Object> repository;
+	protected final Repository<Object> repository;
 
-	protected AuditContext auditContext;
-	protected LoginService loginService;
+	protected final AuditContext auditContext;
+	protected final LoginService loginService;
 
 	protected BaseTest(String name) {
 		super(name);
@@ -64,7 +65,7 @@ public abstract class BaseTest extends TestCase {
 	}
 
 	protected void initDefaultUser() {
-		User user = (User) auditContext.getUser();
+		User user = getDefaultUser();
 
 		// ApplicationContext is static and shared among all Test instances.
 		// MockContext is singleton and as such the contained user property
@@ -73,6 +74,14 @@ public abstract class BaseTest extends TestCase {
 		if (user.getId() == null) {
 			loginService.createUser(user);
 		}
+	}
+
+	protected User getDefaultUser() {
+		return (User) auditContext.getUser();
+	}
+
+	protected UserRole getDefaultUserRole(int index) {
+		return getDefaultUser().getRoles().get(index);
 	}
 
 	@Override

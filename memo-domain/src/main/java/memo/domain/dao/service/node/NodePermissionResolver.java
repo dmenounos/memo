@@ -29,7 +29,7 @@ import mojo.dao.core.spec.ByKey;
 import mojo.dao.core.spec.Select;
 
 import memo.domain.dao.model.EntityUtils;
-import memo.domain.dao.model.Permissions;
+import memo.domain.dao.model.core.Permissions;
 import memo.domain.dao.model.node.Node;
 import memo.domain.dao.model.node.NodeRule;
 import memo.domain.dao.model.user.User;
@@ -37,7 +37,7 @@ import memo.domain.dao.model.user.UserRole;
 import memo.domain.dao.service.PermissionResolver;
 
 @Component
-public class NodePermissionResolver extends PermissionResolver {
+public class NodePermissionResolver extends PermissionResolver<Node, NodeRule> {
 
 	@Autowired
 	@Qualifier("auditContext")
@@ -48,28 +48,29 @@ public class NodePermissionResolver extends PermissionResolver {
 	private DataService<NodeRule> nodeRuleService;
 
 	@Override
-	protected int resolveRulePermissions(Permissions entity) {
-		if (entity instanceof Node) {
-			Node node = (Node) entity;
-			User user = (User) auditContext.getUser();
+	protected List<NodeRule> getEntityPermissionsList(Object nodeId) {
+		Select<NodeRule> select = new Select<NodeRule>();
+		select.filter(new ByKey().property("node").key(nodeId));
+		DataPage<NodeRule> dataPage = nodeRuleService.select(select);
+		List<NodeRule> nodeRules = dataPage.getData();
+		return nodeRules;
+	}
 
-			if (user != null) {
-				// fetch node rules for this node
-				Select<NodeRule> select = new Select<NodeRule>();
-				select.filter(new ByKey().property("node").key(node.getId()));
-				DataPage<NodeRule> dataPage = nodeRuleService.select(select);
-				List<NodeRule> nodeRules = dataPage.getData();
+	@Override
+	protected int resolveActorPermissions(List<NodeRule> nodeRules) {
+		User user = (User) auditContext.getUser();
 
-				// get user roles for current user
-				List<UserRole> userRoles = user.getRoles();
+		if (user != null) {
 
-				for (NodeRule nodeRule : nodeRules) {
-					UserRole nodeRole = nodeRule.getUserRole();
+			// get user roles for current user
+			List<UserRole> userRoles = user.getRoles();
 
-					for (UserRole userRole : userRoles) {
-						if (EntityUtils.equals(nodeRole, userRole)) {
-							return nodeRule.getPermissions();
-						}
+			for (NodeRule nodeRule : nodeRules) {
+				UserRole nodeRole = nodeRule.getUserRole();
+
+				for (UserRole userRole : userRoles) {
+					if (EntityUtils.equals(nodeRole, userRole)) {
+						return nodeRule.getPermissions();
 					}
 				}
 			}
