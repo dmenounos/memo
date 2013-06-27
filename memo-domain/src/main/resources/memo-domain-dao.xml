@@ -35,22 +35,6 @@
 		<property name="entityType" value="memo.domain.dao.model.misc.Language" />
 	</bean>
 
-	<bean id="nodeRepository" class="mojo.dao.core.jpa.JpaRepository">
-		<property name="entityType" value="memo.domain.dao.model.node.Node" />
-	</bean>
-
-	<bean id="nodeRuleRepository" class="mojo.dao.core.jpa.JpaRepository">
-		<property name="entityType" value="memo.domain.dao.model.node.NodeRule" />
-	</bean>
-
-	<bean id="postRepository" class="mojo.dao.core.jpa.JpaRepository">
-		<property name="entityType" value="memo.domain.dao.model.post.Post" />
-	</bean>
-
-	<bean id="postRuleRepository" class="mojo.dao.core.jpa.JpaRepository">
-		<property name="entityType" value="memo.domain.dao.model.post.PostRule" />
-	</bean>
-
 	<bean id="userRepository" class="mojo.dao.core.jpa.JpaRepository">
 		<property name="entityType" value="memo.domain.dao.model.user.User" />
 	</bean>
@@ -72,34 +56,6 @@
 		<property name="repository" ref="languageRepository" />
 		<property name="validation">
 			<bean class="memo.domain.dao.validation.LanguageValidation" />
-		</property>
-	</bean>
-
-	<bean id="nodeService" class="memo.domain.dao.service.node.NodeService">
-		<property name="repository" ref="nodeRepository" />
-		<property name="validation">
-			<bean class="memo.domain.dao.validation.NodeValidation" />
-		</property>
-	</bean>
-
-	<bean id="nodeRuleService" class="mojo.dao.core.DataService">
-		<property name="repository" ref="nodeRuleRepository" />
-		<property name="validation">
-			<bean class="memo.domain.dao.validation.NodeRuleValidation" />
-		</property>
-	</bean>
-
-	<bean id="postService" class="mojo.dao.core.DataService">
-		<property name="repository" ref="postRepository" />
-		<property name="validation">
-			<bean class="memo.domain.dao.validation.PostValidation" />
-		</property>
-	</bean>
-
-	<bean id="postRuleService" class="mojo.dao.core.DataService">
-		<property name="repository" ref="postRuleRepository" />
-		<property name="validation">
-			<bean class="memo.domain.dao.validation.PostRuleValidation" />
 		</property>
 	</bean>
 

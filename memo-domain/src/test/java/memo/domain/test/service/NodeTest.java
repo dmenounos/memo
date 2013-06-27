@@ -24,50 +24,48 @@ import java.beans.PropertyDescriptor;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Node;
+
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import mojo.dao.core.DataService;
 import mojo.dao.core.Repository;
 import mojo.dao.core.spec.Delete;
 import mojo.dao.core.spec.Insert;
 
-import memo.domain.dao.model.core.Permissions;
-import memo.domain.dao.model.node.Node;
-import memo.domain.dao.model.node.NodeRule;
-import memo.domain.dao.service.node.NodeService;
+import memo.domain.dao.model.core.Permission;
+import memo.domain.dao.model.core.Resource;
+import memo.domain.dao.service.core.PermissionService;
+import memo.domain.dao.service.core.ResourceService;
 import memo.domain.test.BaseTest;
 
 public class NodeTest extends BaseTest {
 
-	// used to persist the root node
-	private Repository<Node> nodeRepository;
-
-	private DataService<NodeRule> nodeRuleService;
-	private NodeService nodeService;
-	private Node rootNode;
+	private PermissionService permissionService;
+	private ResourceService resourceService;
+	private Resource rootNode;
 
 	protected NodeTest(String name) {
 		super(name);
 
-		nodeRuleService = getBean("nodeRuleService");
-		nodeRepository = getBean("nodeRepository");
-		nodeService = getBean("nodeService");
+		permissionService = getBean("permissionService");
+		resourceService = getBean("resourceService");
 	}
 
 	@Override
 	protected void setUp() {
 		super.setUp();
 
-		rootNode = new Node();
+		rootNode = new Resource();
 		rootNode.setCode("root");
 
 		TransactionTemplate template = createTransactionTemplate();
 		template.execute(new TransactionCallback<Object>() {
 
 			public Object doInTransaction(TransactionStatus status) {
-				nodeRepository.insert(new Insert<Node>(rootNode));
+				Repository<Resource> resourceRepository = resourceService.getRepository();
+				resourceRepository.insert(new Insert<Resource>(rootNode));
 				return null;
 			}
 		});
@@ -79,7 +77,8 @@ public class NodeTest extends BaseTest {
 		template.execute(new TransactionCallback<Object>() {
 
 			public Object doInTransaction(TransactionStatus status) {
-				nodeRepository.delete(new Delete<Node>(rootNode.getId()));
+				Repository<Resource> resourceRepository = resourceService.getRepository();
+				resourceRepository.delete(new Delete<Resource>(rootNode.getId()));
 				return null;
 			}
 		});
@@ -89,69 +88,69 @@ public class NodeTest extends BaseTest {
 
 	public void testRootCRUD() {
 		log("Creating rootNode");
-		Node node = new Node();
+		Resource node = new Resource();
 		node.setCode("alt-root-node");
-		nodeService.insert(node);
+		resourceService.insert(node);
 
 		log("Retrieving rootNode #" + node.getId());
-		Node loadedNode = nodeService.findById(node.getId());
+		Resource loadedNode = resourceService.findById(node.getId());
 		assertEqualNodes(node, loadedNode);
 
 		log("Modifying rootNode #" + node.getId());
 		node.setCode("modified-alt-root-node");
-		Node updatedNode = nodeService.update(node);
+		Resource updatedNode = resourceService.update(node);
 		assertEqualNodes(node, updatedNode);
 
 		log("Deleting rootNode #" + node.getId());
-		nodeService.delete(node.getId());
-		node = nodeService.findById(node.getId());
+		resourceService.delete(node.getId());
+		node = resourceService.findById(node.getId());
 		assertNull("not null node after delete", node);
 	}
 
 	public void testNodeCRUD() {
 		log("Creating node");
-		Node node = rootNode.createChildNode("child-node");
-		node = nodeService.insert(node);
+		Resource node = rootNode.createChildNode("child-node");
+		node = resourceService.insert(node);
 		assertValidNode(node);
 
 		log("Retrieving node #" + node.getId());
-		Node loadedNode = nodeService.findById(node.getId());
+		Resource loadedNode = resourceService.findById(node.getId());
 		assertEqualNodes(node, loadedNode);
 
 		log("Modifying node #" + node.getId());
 		node.setCode("modified-child-node");
-		Node updatedNode = nodeService.update(node);
+		Resource updatedNode = resourceService.update(node);
 		assertEqualNodes(node, updatedNode);
 
 		log("Deleting node #" + node.getId());
-		nodeService.delete(node.getId());
-		node = nodeService.findById(node.getId());
+		resourceService.delete(node.getId());
+		node = resourceService.findById(node.getId());
 		assertNull("not null node after delete", node);
 	}
 
 	public void testNodeRules() {
 		log("Creating folder without permissions");
-		Node folder = rootNode.createChildNode("folder");
-		folder = nodeService.insert(folder);
+		Resource folder = rootNode.createChildNode("folder");
+		folder = resourceService.insert(folder);
 
 		log("Retrieving folder #" + folder.getId());
-		Node loadedFolder = nodeService.findById(folder.getId());
+		Resource loadedFolder = resourceService.findById(folder.getId());
 		assertEqualNodes(folder, loadedFolder);
 
 		log("Creating file with none permissions");
-		Node file = folder.createChildNode("file");
-		file = nodeService.insert(file);
+		Resource file = folder.createChildNode("file");
+		file = resourceService.insert(file);
 
-		NodeRule fileRule = file.createNodeRule();
-		fileRule.setUserRole(getDefaultUserRole(0));
-		fileRule.setPermissions(Permissions.NONE);
-		nodeRuleService.insert(fileRule);
+		Permission fileRule = file.createPermission();
+		fileRule.setActor(getDefaultUserRole(0));
+		fileRule.setPermission(Permission.NONE);
+		permissionService.insert(fileRule);
 
 		Exception exception = null;
 
 		try {
 			log("Attempting to modify file #" + file.getId());
-			nodeService.update(file);
+			resourceService.update(file);
 		}
 		catch (Exception e) {
 			exception = e;
@@ -163,7 +162,7 @@ public class NodeTest extends BaseTest {
 
 		try {
 			log("Attempting to modify folder #" + folder.getId());
-			nodeService.update(folder);
+			resourceService.update(folder);
 		}
 		catch (Exception e) {
 			exception = e;
@@ -176,7 +175,7 @@ public class NodeTest extends BaseTest {
 
 		try {
 			log("Attempting to delete file #" + file.getId());
-			nodeService.delete(file.getId());
+			resourceService.delete(file.getId());
 		}
 		catch (Exception e) {
 			exception = e;
@@ -188,7 +187,7 @@ public class NodeTest extends BaseTest {
 
 		try {
 			log("Attempting to delete folder #" + folder.getId());
-			nodeService.delete(folder.getId());
+			resourceService.delete(folder.getId());
 		}
 		catch (Exception e) {
 			exception = e;
@@ -221,12 +220,12 @@ public class NodeTest extends BaseTest {
 		}
 	}
 
-	protected static void assertValidNode(Node node) {
+	protected static void assertValidNode(Resource node) {
 		assertNotNull("null node", node);
 		assertNotNull("null node.id", node.getId());
 	}
 
-	protected static void assertEqualNodes(Node exp, Node act) {
+	protected static void assertEqualNodes(Resource exp, Resource act) {
 		if (exp == null) {
 			assertNull("not null node", act);
 		}

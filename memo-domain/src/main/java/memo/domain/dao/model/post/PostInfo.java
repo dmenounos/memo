@@ -27,6 +27,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import memo.domain.dao.model.AbstractEntity;
+import memo.domain.dao.model.core.Resource;
 
 @Entity
 @Table(name = "memo_post_info")
@@ -34,7 +35,7 @@ public class PostInfo extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	private Post post;
+	private Resource resource;
 	private Locale locale;
 
 	private String title;
@@ -42,12 +43,12 @@ public class PostInfo extends AbstractEntity {
 
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Post getPost() {
-		return post;
+	public Resource getResource() {
+		return resource;
 	}
 
-	public void setPost(Post post) {
-		this.post = post;
+	public void setResource(Resource resource) {
+		this.resource = resource;
 	}
 
 	@Column(nullable = false)

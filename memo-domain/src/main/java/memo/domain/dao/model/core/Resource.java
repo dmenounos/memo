@@ -16,19 +16,33 @@
  */
 package memo.domain.dao.model.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import memo.domain.dao.model.AuditableEntity;
 
-@MappedSuperclass
-public abstract class Resource extends AuditableEntity implements Hierarchical {
+@Entity
+@Table(name = "memo_resource")
+public class Resource extends AuditableEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	private String code;
 	private String hint;
+
+	private Resource parentNode;
+	private List<Resource> childNodes;
+	private List<Permission> permissions;
 
 	private boolean leaf;
 	private boolean hidden;
@@ -63,6 +77,82 @@ public abstract class Resource extends AuditableEntity implements Hierarchical {
 	@Transient
 	public boolean isRoot() {
 		return getParentNode() == null;
+	}
+
+	/**
+	 * The hierarchical parent.
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	public Resource getParentNode() {
+		return parentNode;
+	}
+
+	public void setParentNode(Resource parentNode) {
+		this.parentNode = parentNode;
+	}
+
+	/**
+	 * Helper method.
+	 */
+	public boolean hasChildNodes() {
+		return childNodes != null && !childNodes.isEmpty();
+	}
+
+	@OrderBy("id")
+	@OneToMany(mappedBy = "parentNode",
+	cascade = { CascadeType.REMOVE })
+	public List<Resource> getChildNodes() {
+		if (childNodes == null) {
+			childNodes = new ArrayList<Resource>();
+		}
+
+		return childNodes;
+	}
+
+	public void setChildNodes(List<Resource> childNodes) {
+		this.childNodes = childNodes;
+	}
+
+	/**
+	 * Helper method.
+	 */
+	public Resource createChildNode(String code) {
+		Resource node = new Resource();
+		getChildNodes().add(node);
+		node.setParentNode(this);
+		node.setCode(code);
+		return node;
+	}
+
+	@OrderBy("pos")
+	@OneToMany(mappedBy = "resource",
+	cascade = { CascadeType.REMOVE })
+	public List<Permission> getPermissions() {
+		if (permissions == null) {
+			return new ArrayList<Permission>();
+		}
+
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
+	}
+
+	/**
+	 * Helper method.
+	 */
+	public boolean hasPermissions() {
+		return permissions != null && !permissions.isEmpty();
+	}
+
+	/**
+	 * Helper method.
+	 */
+	public Permission createPermission() {
+		Permission permission = new Permission();
+		permission.setResource(this);
+		return permission;
 	}
 
 	public boolean isLeaf() {

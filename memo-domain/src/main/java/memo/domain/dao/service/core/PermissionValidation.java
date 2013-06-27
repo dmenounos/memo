@@ -14,22 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.validation;
+package memo.domain.dao.service.core;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import mojo.dao.core.Validation;
 
-import memo.domain.dao.model.node.Node;
+import memo.domain.dao.model.core.Permission;
 
-public class NodeValidation extends Validation<Node> {
+@Component
+public class PermissionValidation extends Validation<Permission> {
 
 	@Override
-	protected void validate(Node entity, List<String> errors) {
-		if (checkNull(entity, errors, "Node.null")) {
+	protected void validate(Permission entity, List<String> errors) {
+		if (checkNull(entity, errors, "Permission.null")) {
 			return;
 		}
 
-		checkEmpty(entity.getCode(), errors, "Node.code.empty");
+		checkNull(entity.getActor(), errors, "Permission.actor.null");
+		checkNull(entity.getResource(), errors, "Permission.resource.null");
 	}
 }

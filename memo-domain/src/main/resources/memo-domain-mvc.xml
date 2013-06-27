@@ -98,25 +98,24 @@
 		<property name="aliases">
 			<map>
 
-				<entry key="DataPage"  value="mojo.dao.core.DataPage" />
-				<entry key="Batch"     value="mojo.dao.core.spec.Batch" />
-				<entry key="ByKey"     value="mojo.dao.core.spec.ByKey" />
-				<entry key="ByText"    value="mojo.dao.core.spec.ByText" />
-				<entry key="Select"    value="mojo.dao.core.spec.Select" />
-				<entry key="Insert"    value="mojo.dao.core.spec.Insert" />
-				<entry key="Update"    value="mojo.dao.core.spec.Update" />
-				<entry key="Delete"    value="mojo.dao.core.spec.Delete" />
+				<entry key="DataPage"   value="mojo.dao.core.DataPage" />
+				<entry key="Batch"      value="mojo.dao.core.spec.Batch" />
+				<entry key="ByKey"      value="mojo.dao.core.spec.ByKey" />
+				<entry key="ByText"     value="mojo.dao.core.spec.ByText" />
+				<entry key="Select"     value="mojo.dao.core.spec.Select" />
+				<entry key="Insert"     value="mojo.dao.core.spec.Insert" />
+				<entry key="Update"     value="mojo.dao.core.spec.Update" />
+				<entry key="Delete"     value="mojo.dao.core.spec.Delete" />
 
-				<entry key="Country"   value="memo.domain.dao.model.misc.Country" />
-				<entry key="Language"  value="memo.domain.dao.model.misc.Language" />
-				<entry key="Node"      value="memo.domain.dao.model.node.Node" />
-				<entry key="NodeInfo"  value="memo.domain.dao.model.node.NodeInfo" />
-				<entry key="NodeRule"  value="memo.domain.dao.model.node.NodeRule" />
-				<entry key="Post"      value="memo.domain.dao.model.post.Post" />
-				<entry key="PostRule"  value="memo.domain.dao.model.post.PostRule" />
-				<entry key="OpenID"    value="memo.domain.dao.model.user.OpenID" />
-				<entry key="User"      value="memo.domain.dao.model.user.User" />
-				<entry key="UserRole"  value="memo.domain.dao.model.user.UserRole" />
+				<entry key="Permission" value="memo.domain.dao.model.core.Permission" />
+				<entry key="Resource"   value="memo.domain.dao.model.core.Resource" />
+				<entry key="Country"    value="memo.domain.dao.model.misc.Country" />
+				<entry key="Language"   value="memo.domain.dao.model.misc.Language" />
+				<entry key="NodeInfo"   value="memo.domain.dao.model.node.NodeInfo" />
+				<entry key="PostRule"   value="memo.domain.dao.model.post.PostInfo" />
+				<entry key="OpenID"     value="memo.domain.dao.model.user.OpenID" />
+				<entry key="User"       value="memo.domain.dao.model.user.User" />
+				<entry key="UserRole"   value="memo.domain.dao.model.user.UserRole" />
 
 			</map>
 		</property>

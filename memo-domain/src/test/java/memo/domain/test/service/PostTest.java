@@ -19,15 +19,15 @@ package memo.domain.test.service;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import mojo.dao.core.DataService;
 import mojo.dao.core.spec.Select;
 
-import memo.domain.dao.model.post.Post;
+import memo.domain.dao.model.core.Resource;
+import memo.domain.dao.service.core.ResourceService;
 import memo.domain.test.BaseTest;
 
 public class PostTest extends BaseTest {
 
-	private DataService<Post> postService;
+	private ResourceService resourceService;
 
 	private String postTitle;
 	// private String postContent;
@@ -35,7 +35,7 @@ public class PostTest extends BaseTest {
 	public PostTest(String testName) {
 		super(testName);
 
-		postService = getBean("postService");
+		resourceService = getBean("resourceService");
 	}
 
 	@Override
@@ -57,32 +57,32 @@ public class PostTest extends BaseTest {
 
 	public void testCRUD() {
 		log("Creating post");
-		Post post = postService.insert(createPost());
+		Resource post = resourceService.insert(createPost());
 		assertValidPost(post);
 
 		log("Retrieving post #" + post.getId());
-		Select<Post> select = new Select<Post>().join("createUser");
-		Post loadedPost = postService.select(select).unique();
+		Select<Resource> select = new Select<Resource>().join("createUser");
+		Resource loadedPost = resourceService.select(select).unique();
 		assertEqualPosts(post, loadedPost);
 
 		log("Deleting post #" + post.getId());
-		postService.delete(post.getId());
-		post = postService.findById(post.getId());
+		resourceService.delete(post.getId());
+		post = resourceService.findById(post.getId());
 		assertNull("not null post after delete", post);
 	}
 
-	private Post createPost() {
-		Post post = new Post();
+	private Resource createPost() {
+		Resource post = new Resource();
 		post.setCode(postTitle);
 		return post;
 	}
 
-	protected static void assertValidPost(Post post) {
+	protected static void assertValidPost(Resource post) {
 		assertNotNull("null post", post);
 		assertNotNull("null post.id", post.getId());
 	}
 
-	protected static void assertEqualPosts(Post exp, Post act) {
+	protected static void assertEqualPosts(Resource exp, Resource act) {
 		if (exp == null) {
 			assertNull("not null post", act);
 		}

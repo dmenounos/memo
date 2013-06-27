@@ -14,26 +14,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.model.post;
+package memo.domain.dao.model.core;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import memo.domain.dao.model.core.Permissions;
-import memo.domain.dao.model.user.UserRole;
+import memo.domain.dao.model.AbstractEntity;
 
 @Entity
-@Table(name = "memo_post_rule")
-public class PostRule extends Permissions {
+@Table(name = "memo_permission")
+public class Permission extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
+	// @formatter:off
+	public static final int ALL = 7;
+	public static final int READ = 4;
+	public static final int WRITE = 2;
+	public static final int EXECUTE = 1;
+	public static final int NONE = 0;
+	// @formatter:on
+
 	private int pos;
-	private Post post;
-	private UserRole userRole;
+	private Actor actor;
+	private Resource resource;
+
+	/**
+	 * Same as UNIX.
+	 */
+	private int permission;
 
 	public int getPos() {
 		return pos;
@@ -45,21 +58,30 @@ public class PostRule extends Permissions {
 
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Post getPost() {
-		return post;
+	public Actor getActor() {
+		return actor;
 	}
 
-	public void setPost(Post post) {
-		this.post = post;
+	public void setActor(Actor actor) {
+		this.actor = actor;
 	}
 
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public UserRole getUserRole() {
-		return userRole;
+	public Resource getResource() {
+		return resource;
 	}
 
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
+	@Column(nullable = false)
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
 	}
 }

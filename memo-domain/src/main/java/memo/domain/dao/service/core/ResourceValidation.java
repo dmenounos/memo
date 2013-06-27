@@ -14,9 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.model.core;
+package memo.domain.dao.service.core;
 
-public interface Hierarchical {
+import java.util.List;
 
-	Hierarchical getParentNode();
+import org.springframework.stereotype.Component;
+
+import mojo.dao.core.Validation;
+
+import memo.domain.dao.model.core.Resource;
+
+@Component
+public class ResourceValidation extends Validation<Resource> {
+
+	@Override
+	protected void validate(Resource entity, List<String> errors) {
+		if (checkNull(entity, errors, "Resource.null")) {
+			return;
+		}
+
+		checkEmpty(entity.getCode(), errors, "Resource.code.empty");
+	}
 }

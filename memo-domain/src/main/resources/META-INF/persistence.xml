@@ -8,13 +8,12 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
+		<class>memo.domain.dao.model.core.Permission</class>
+		<class>memo.domain.dao.model.core.Resource</class>
 		<class>memo.domain.dao.model.misc.Country</class>
 		<class>memo.domain.dao.model.misc.Language</class>
-		<class>memo.domain.dao.model.node.Node</class>
 		<class>memo.domain.dao.model.node.NodeInfo</class>
-		<class>memo.domain.dao.model.node.NodeRule</class>
-		<class>memo.domain.dao.model.post.Post</class>
-		<class>memo.domain.dao.model.post.PostRule</class>
+		<class>memo.domain.dao.model.post.PostInfo</class>
 		<class>memo.domain.dao.model.user.OpenID</class>
 		<class>memo.domain.dao.model.user.User</class>
 		<class>memo.domain.dao.model.user.UserRole</class>

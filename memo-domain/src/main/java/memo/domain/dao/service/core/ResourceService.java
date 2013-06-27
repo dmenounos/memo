@@ -14,29 +14,43 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.service.node;
+package memo.domain.dao.service.core;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import mojo.dao.core.DataException;
 import mojo.dao.core.DataService;
 
-import memo.domain.dao.model.node.Node;
+import memo.domain.dao.model.core.Resource;
 
-public class NodeService extends DataService<Node> {
+@Service
+public class ResourceService extends DataService<Resource> {
 
 	@Autowired
-	@Qualifier("nodePermissionResolver")
-	private NodePermissionResolver permissionResolver;
+	private ResourceRepository resourceRepository;
+
+	@Autowired
+	private ResourceValidation resourceValidation;
+
+	@Autowired
+	private PermissionResolver permissionResolver;
+
+	@PostConstruct
+	protected void init() {
+		setRepository(resourceRepository);
+		setValidation(resourceValidation);
+	}
 
 	@Override
-	protected void beforeInsert(Node node) {
+	protected void beforeInsert(Resource node) {
 		checkWrite(node, null);
 	}
 
 	@Override
-	protected void beforeUpdate(Node node) {
+	protected void beforeUpdate(Resource node) {
 		checkWrite(node, findById(node.getId()));
 	}
 
@@ -45,8 +59,8 @@ public class NodeService extends DataService<Node> {
 		checkWrite(null, findById(id));
 	}
 
-	protected void checkWrite(Node clientNode, Node serverNode) {
-		Node serverParent;
+	protected void checkWrite(Resource clientNode, Resource serverNode) {
+		Resource serverParent;
 
 		//
 		// Update or Delete.
@@ -110,8 +124,8 @@ public class NodeService extends DataService<Node> {
 	 * Check whether the "child" belongs to a subtree.<br />
 	 * The subtree starts from (and includes) the "parent".
 	 */
-	protected boolean checkHierarchy(Node parent, Node child) {
-		for (Node node = child; node != null; node = node.getParentNode()) {
+	protected boolean checkHierarchy(Resource parent, Resource child) {
+		for (Resource node = child; node != null; node = node.getParentNode()) {
 			if (node.getId().equals(parent.getId())) {
 				return true;
 			}
