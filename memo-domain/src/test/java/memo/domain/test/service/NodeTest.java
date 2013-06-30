@@ -142,7 +142,7 @@ public class NodeTest extends BaseTest {
 		file = resourceService.insert(file);
 
 		Permission fileRule = file.createPermission();
-		fileRule.setActor(getDefaultUserRole(0));
+		fileRule.setUserRole(getDefaultUserRole(0));
 		fileRule.setPermission(Permission.NONE);
 		permissionService.insert(fileRule);
 

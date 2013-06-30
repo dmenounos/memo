@@ -16,10 +16,15 @@
  */
 package memo.domain.dao.service.core;
 
+import java.util.List;
+
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import mojo.dao.core.jpa.JpaRepository;
 
+import memo.domain.dao.model.core.Permission;
 import memo.domain.dao.model.core.Resource;
 
 @Repository
@@ -27,5 +32,17 @@ public class ResourceRepository extends JpaRepository<Resource> {
 
 	public ResourceRepository() {
 		setEntityType(Resource.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Permission> getPermissions(Object resourceId) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT p FROM Permission p ");
+		sb.append("WHERE p.resource.id = :resourceId");
+
+		Query query = getEntityManager().createQuery(sb.toString());
+		query.setParameter("resourceId", resourceId);
+
+		return query.getResultList();
 	}
 }

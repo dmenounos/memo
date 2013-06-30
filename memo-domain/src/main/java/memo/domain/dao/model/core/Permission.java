@@ -24,6 +24,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import memo.domain.dao.model.AbstractEntity;
+import memo.domain.dao.model.user.UserRole;
 
 @Entity
 @Table(name = "memo_permission")
@@ -40,8 +41,8 @@ public class Permission extends AbstractEntity {
 	// @formatter:on
 
 	private int pos;
-	private Actor actor;
 	private Resource resource;
+	private UserRole userRole;
 
 	/**
 	 * Same as UNIX.
@@ -58,22 +59,22 @@ public class Permission extends AbstractEntity {
 
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Actor getActor() {
-		return actor;
-	}
-
-	public void setActor(Actor actor) {
-		this.actor = actor;
-	}
-
-	@JoinColumn(nullable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
 	public Resource getResource() {
 		return resource;
 	}
 
 	public void setResource(Resource resource) {
 		this.resource = resource;
+	}
+
+	@JoinColumn(nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 	@Column(nullable = false)

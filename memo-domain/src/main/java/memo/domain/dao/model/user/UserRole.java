@@ -26,11 +26,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import memo.domain.dao.model.core.Actor;
+import memo.domain.dao.model.AbstractEntity;
 
 @Entity
 @Table(name = "memo_user_role")
-public class UserRole extends Actor {
+public class UserRole extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 

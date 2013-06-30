@@ -32,13 +32,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import memo.domain.dao.model.core.Actor;
+import memo.domain.dao.model.AbstractEntity;
 import memo.domain.dao.model.misc.Country;
 import memo.domain.dao.model.misc.Language;
 
 @Entity
 @Table(name = "memo_user")
-public class User extends Actor {
+public class User extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 

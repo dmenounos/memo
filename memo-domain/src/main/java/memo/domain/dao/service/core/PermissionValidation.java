@@ -33,7 +33,7 @@ public class PermissionValidation extends Validation<Permission> {
 			return;
 		}
 
-		checkNull(entity.getActor(), errors, "Permission.actor.null");
 		checkNull(entity.getResource(), errors, "Permission.resource.null");
+		checkNull(entity.getUserRole(), errors, "Permission.userRole.null");
 	}
 }

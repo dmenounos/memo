@@ -16,18 +16,28 @@
  */
 package memo.domain.dao.service.core;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mojo.dao.AuditContext;
 import mojo.dao.core.DataException;
 import mojo.dao.core.DataService;
 
+import memo.domain.dao.model.EntityUtils;
+import memo.domain.dao.model.core.Permission;
 import memo.domain.dao.model.core.Resource;
+import memo.domain.dao.model.user.User;
+import memo.domain.dao.model.user.UserRole;
 
 @Service
 public class ResourceService extends DataService<Resource> {
+
+	@Autowired
+	private AuditContext auditContext;
 
 	@Autowired
 	private ResourceRepository resourceRepository;
@@ -35,14 +45,63 @@ public class ResourceService extends DataService<Resource> {
 	@Autowired
 	private ResourceValidation resourceValidation;
 
-	@Autowired
-	private PermissionResolver permissionResolver;
-
 	@PostConstruct
 	protected void init() {
 		setRepository(resourceRepository);
 		setValidation(resourceValidation);
 	}
+
+	//
+	// PERMISSION RESOLVING FUNCTIONALLITY
+	//
+
+	public boolean hasReadAccess(Resource entity) {
+		return hasAccess(entity, Permission.READ);
+	}
+
+	public boolean hasWriteAccess(Resource entity) {
+		return hasAccess(entity, Permission.WRITE);
+	}
+
+	public boolean hasExecuteAccess(Resource entity) {
+		return hasAccess(entity, Permission.EXECUTE);
+	}
+
+	protected boolean hasAccess(Resource entity, int access) {
+		List<Permission> resourcePermissions = resourceRepository.getPermissions(entity.getId());
+
+		if (resourcePermissions != null && !resourcePermissions.isEmpty()) {
+			int actorPermissions = resolvePermission(resourcePermissions);
+			return access == (actorPermissions & access);
+		}
+
+		return true;
+	}
+
+	protected int resolvePermission(List<Permission> permissions) {
+		User user = (User) auditContext.getUser();
+
+		if (user != null) {
+			List<UserRole> userRoles = user.getRoles();
+
+			for (Permission permission : permissions) {
+				UserRole permissionRole = permission.getUserRole();
+
+				for (UserRole userRole : userRoles) {
+					if (EntityUtils.equals(userRole, permissionRole)) {
+						return permission.getPermission();
+					}
+				}
+			}
+		}
+
+		return Permission.NONE;
+	}
+
+	//
+	// IMPLEMENT AUTHORIZATION
+	// USING PERMISSION RESOLVING FUNCTIONALLITY
+	//
 
 	@Override
 	protected void beforeInsert(Resource node) {
@@ -70,14 +129,14 @@ public class ResourceService extends DataService<Resource> {
 			serverParent = serverNode.getParentNode();
 
 			// check parent node permission
-			if (serverParent != null && !permissionResolver.hasWriteAccess(serverParent)) {
+			if (serverParent != null && !hasWriteAccess(serverParent)) {
 				StringBuilder sb = new StringBuilder("Parent node permission violation;");
 				sb.append(" #" + serverParent.getId() + " " + serverParent.getCode());
 				throw new DataException(sb.toString());
 			}
 
 			// check node permission
-			if (!permissionResolver.hasWriteAccess(serverNode)) {
+			if (!hasWriteAccess(serverNode)) {
 				StringBuilder sb = new StringBuilder("Node permission violation;");
 				sb.append(" #" + serverNode.getId() + " " + serverNode.getCode());
 				throw new DataException(sb.toString());
@@ -111,7 +170,7 @@ public class ResourceService extends DataService<Resource> {
 				}
 
 				// check parent node permission
-				if (!permissionResolver.hasWriteAccess(serverParent)) {
+				if (!hasWriteAccess(serverParent)) {
 					StringBuilder sb = new StringBuilder("Parent node permission violation;");
 					sb.append(" #" + serverParent.getId() + " " + serverParent.getCode());
 					throw new DataException(sb.toString());
