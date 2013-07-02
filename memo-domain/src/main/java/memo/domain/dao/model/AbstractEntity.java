@@ -41,8 +41,21 @@ public class AbstractEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getClass().getName());
-		sb.append(" { id: ").append(getId()).append(" } ");
+		StringBuilder sb = new StringBuilder();
+		sb.append("{ ");
+		buildString(sb);
+		sb.append(" }");
 		return sb.toString();
+	}
+
+	public String toDebugString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getClass().getName());
+		sb.append(" ").append(this);
+		return sb.toString();
+	}
+
+	protected void buildString(StringBuilder sb) {
+		sb.append("id: ").append(id);
 	}
 }

@@ -118,7 +118,6 @@ public class Resource extends AuditableEntity {
 	 */
 	public Resource createChildNode(String code) {
 		Resource node = new Resource();
-		getChildNodes().add(node);
 		node.setParentNode(this);
 		node.setCode(code);
 		return node;
@@ -169,5 +168,11 @@ public class Resource extends AuditableEntity {
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+
+	@Override
+	protected void buildString(StringBuilder sb) {
+		super.buildString(sb);
+		sb.append(", code: ").append(code);
 	}
 }

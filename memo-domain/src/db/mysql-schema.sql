@@ -124,3 +124,6 @@ alter table memo_user_role_assoc add index       (role_id);
 alter table memo_user_role_assoc add foreign key (user_id) references memo_user(id) on delete cascade;
 alter table memo_user_role_assoc add foreign key (role_id) references memo_user_role(id) on delete cascade;
 alter table memo_user_role_assoc add unique key  (user_id, role_id);
+
+INSERT INTO memo_resource (id, code, leaf, hidden)
+VALUES (null, '', false, false);

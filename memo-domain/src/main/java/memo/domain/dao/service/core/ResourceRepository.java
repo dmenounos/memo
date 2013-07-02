@@ -34,15 +34,34 @@ public class ResourceRepository extends JpaRepository<Resource> {
 		setEntityType(Resource.class);
 	}
 
+	public Resource getRootNode() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT r FROM Resource r ");
+		sb.append("WHERE r.parentNode.id is null");
+
+		Query query = getEntityManager().createQuery(sb.toString());
+		return (Resource) query.getSingleResult();
+	}
+
 	@SuppressWarnings("unchecked")
-	public List<Permission> getPermissions(Object resourceId) {
+	public List<Resource> getChildNodes(Resource parentNode) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT r FROM Resource r ");
+		sb.append("WHERE r.parentNode.id = :parentNodeId");
+
+		Query query = getEntityManager().createQuery(sb.toString());
+		query.setParameter("parentNodeId", parentNode.getId());
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Permission> getPermissions(Resource resource) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT p FROM Permission p ");
 		sb.append("WHERE p.resource.id = :resourceId");
 
 		Query query = getEntityManager().createQuery(sb.toString());
-		query.setParameter("resourceId", resourceId);
-
+		query.setParameter("resourceId", resource.getId());
 		return query.getResultList();
 	}
 }

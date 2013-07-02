@@ -33,6 +33,6 @@ public class ResourceValidation extends Validation<Resource> {
 			return;
 		}
 
-		checkEmpty(entity.getCode(), errors, "Resource.code.empty");
+		// checkEmpty(entity.getCode(), errors, "Resource.code.empty");
 	}
 }

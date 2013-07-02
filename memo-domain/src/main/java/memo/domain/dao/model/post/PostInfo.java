@@ -27,11 +27,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import memo.domain.dao.model.AbstractEntity;
+import memo.domain.dao.model.core.MountPoint;
 import memo.domain.dao.model.core.Resource;
 
 @Entity
 @Table(name = "memo_post_info")
-public class PostInfo extends AbstractEntity {
+public class PostInfo extends AbstractEntity implements MountPoint {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,12 +42,14 @@ public class PostInfo extends AbstractEntity {
 	private String title;
 	private String content;
 
+	@Override
 	@JoinColumn(nullable = false)
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Resource getResource() {
 		return resource;
 	}
 
+	@Override
 	public void setResource(Resource resource) {
 		this.resource = resource;
 	}

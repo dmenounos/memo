@@ -51,24 +51,47 @@ public class ResourceService extends DataService<Resource> {
 		setValidation(resourceValidation);
 	}
 
+	public Resource getRootNode() {
+		logger.debug("FETCHING ROOT NODE");
+		return resourceRepository.getRootNode();
+	}
+
+	public Resource createRootNode() {
+		logger.debug("CREATING ROOT NODE");
+		Resource rootNode = new Resource();
+		rootNode.setCode("");
+		return insert(rootNode);
+	}
+
+	public List<Resource> getChildNodes(Resource parentNode) {
+		logger.debug("FETCHING CHILD NODES FOR " + parentNode);
+		return resourceRepository.getChildNodes(parentNode);
+	}
+
+	public Resource createChildNode(Resource parentNode, String code) {
+		logger.debug("CREATING CHILD NODE " + code + " FOR " + parentNode);
+		Resource childNode = parentNode.createChildNode(code);
+		return insert(childNode);
+	}
+
 	//
 	// PERMISSION RESOLVING FUNCTIONALLITY
 	//
 
-	public boolean hasReadAccess(Resource entity) {
+	protected boolean hasReadAccess(Resource entity) {
 		return hasAccess(entity, Permission.READ);
 	}
 
-	public boolean hasWriteAccess(Resource entity) {
+	protected boolean hasWriteAccess(Resource entity) {
 		return hasAccess(entity, Permission.WRITE);
 	}
 
-	public boolean hasExecuteAccess(Resource entity) {
+	protected boolean hasExecuteAccess(Resource entity) {
 		return hasAccess(entity, Permission.EXECUTE);
 	}
 
 	protected boolean hasAccess(Resource entity, int access) {
-		List<Permission> resourcePermissions = resourceRepository.getPermissions(entity.getId());
+		List<Permission> resourcePermissions = resourceRepository.getPermissions(entity);
 
 		if (resourcePermissions != null && !resourcePermissions.isEmpty()) {
 			int actorPermissions = resolvePermission(resourcePermissions);
@@ -99,8 +122,8 @@ public class ResourceService extends DataService<Resource> {
 	}
 
 	//
-	// IMPLEMENT AUTHORIZATION
-	// USING PERMISSION RESOLVING FUNCTIONALLITY
+	// AUTHORIZATION FUNCTIONALLITY
+	// USES PERMISSION RESOLVING FUNCTIONALLITY
 	//
 
 	@Override
@@ -126,6 +149,8 @@ public class ResourceService extends DataService<Resource> {
 		//
 
 		if (serverNode != null) {
+			logger.debug("CHECKING WRITE PERMISSION FOR UPDATE OR DELETE");
+
 			serverParent = serverNode.getParentNode();
 
 			// check parent node permission
@@ -148,6 +173,8 @@ public class ResourceService extends DataService<Resource> {
 		//
 
 		if (clientNode != null) {
+			logger.debug("CHECKING WRITE PERMISSION FOR CREATE OR UPDATE");
+
 			boolean isCreate = serverNode == null;
 			boolean isUpdate = serverNode != null;
 
