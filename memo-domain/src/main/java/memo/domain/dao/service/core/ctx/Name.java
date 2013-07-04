@@ -59,7 +59,7 @@ public class Name extends NameBase implements Serializable {
 	}
 
 	public void append(String element) {
-		if (element == null) {
+		if (element == null || element.isEmpty()) {
 			throw new IllegalArgumentException("element must not be empty");
 		}
 
@@ -67,7 +67,7 @@ public class Name extends NameBase implements Serializable {
 	}
 
 	public void insert(int pos, String element) {
-		if (element == null) {
+		if (element == null || element.isEmpty()) {
 			throw new IllegalArgumentException("element must not be empty");
 		}
 
@@ -76,5 +76,10 @@ public class Name extends NameBase implements Serializable {
 
 	public void remove(int pos) {
 		elements.remove(pos);
+	}
+
+	@Override
+	public char getSeparator() {
+		return '/';
 	}
 }

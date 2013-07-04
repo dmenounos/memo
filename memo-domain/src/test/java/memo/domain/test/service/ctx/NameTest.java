@@ -25,14 +25,20 @@ import memo.domain.test.BaseTest;
 
 public class NameTest extends BaseTest {
 
+	private Name name;
+
 	public NameTest(String testName) {
 		super(testName);
 	}
 
-	public void testBasics() {
-		log("Testing [append, insert, remove, getElement, getSize, iterator]");
+	@Override
+	protected void setUp() {
+		super.setUp();
+		name = new Name("00", "01", "02", "03", "04");
+	}
 
-		log("Creating name na");
+	public void testAppendInsert() {
+		log("Creating name");
 		Name na = new Name();
 		na.append("00");
 		na.append("01");
@@ -44,8 +50,10 @@ public class NameTest extends BaseTest {
 		assertEquals("02", na.getElement(2));
 		assertEquals("03", na.getElement(3));
 		assertEquals(5, na.getSize());
+	}
 
-		log("Creating name nb");
+	public void testAppendRemove() {
+		log("Creating name");
 		Name nb = new Name();
 		nb.append("00");
 		nb.append("01");
@@ -58,30 +66,26 @@ public class NameTest extends BaseTest {
 		nb.remove(5);
 		log(nb.toString());
 
-		assertEquals("03", na.getElement(3));
-		assertEquals(5, na.getSize());
+		assertEquals("03", name.getElement(3));
+		assertEquals(5, name.getSize());
 	}
 
-	public void testRest() {
-		log("Testing [createPrefix, createSuffix, startsWith, endsWith]");
-
-		log("Creating name na");
-		Name na = new Name("00", "01", "02", "03", "04");
-		log(na.toString());
-
-		log("Creating prefix nb from na");
-		IName nb = na.createPrefix(2);
+	public void testCreatePrefix() {
+		log("Creating prefix from name");
+		IName nb = name.createPrefix(2);
 		log(nb.toString());
 
-		if (!na.startsWith(nb)) {
+		if (!name.startsWith(nb)) {
 			fail("nb is not a prefix of na.");
 		}
+	}
 
-		log("Creating suffix nb from na");
-		nb = na.createSuffix(2);
+	public void testCreateSuffix() {
+		log("Creating suffix from name");
+		IName nb = name.createSuffix(2);
 		log(nb.toString());
 
-		if (!na.endsWith(nb)) {
+		if (!name.endsWith(nb)) {
 			fail("nb is not a suffix of na.");
 		}
 	}

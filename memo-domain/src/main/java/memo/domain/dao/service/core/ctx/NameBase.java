@@ -26,6 +26,8 @@ import memo.domain.dao.model.core.ctx.IName;
  */
 public abstract class NameBase implements IName {
 
+	public abstract char getSeparator();
+
 	@Override
 	public IName createPrefix(int pos) {
 		return clonePortion(0, pos);
@@ -105,17 +107,13 @@ public abstract class NameBase implements IName {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("[");
+		Iterator<String> it = iterator();
 
-		for (Iterator<String> it = iterator(); it.hasNext();) {
+		while (it.hasNext()) {
+			sb.append(getSeparator());
 			sb.append(it.next());
-
-			if (it.hasNext()) {
-				sb.append(", ");
-			}
 		}
 
-		sb.append("]");
 		return sb.toString();
 	}
 

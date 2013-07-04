@@ -37,7 +37,7 @@ public class ResourceRepository extends JpaRepository<Resource> {
 	public Resource getRootNode() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT r FROM Resource r ");
-		sb.append("WHERE r.parentNode.id is null");
+		sb.append("WHERE r.parentNode.id is null AND r.code is null");
 
 		Query query = getEntityManager().createQuery(sb.toString());
 		return (Resource) query.getSingleResult();

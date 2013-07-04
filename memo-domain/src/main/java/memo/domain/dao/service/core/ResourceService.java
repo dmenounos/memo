@@ -59,7 +59,6 @@ public class ResourceService extends DataService<Resource> {
 	public Resource createRootNode() {
 		logger.debug("CREATING ROOT NODE");
 		Resource rootNode = new Resource();
-		rootNode.setCode("");
 		return insert(rootNode);
 	}
 

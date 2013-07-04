@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -51,7 +50,6 @@ public class Resource extends AuditableEntity {
 	 * Unique identifier code, <br>
 	 * relative to the parent context.
 	 */
-	@Column(nullable = false)
 	public String getCode() {
 		return code;
 	}
@@ -174,5 +172,7 @@ public class Resource extends AuditableEntity {
 	protected void buildString(StringBuilder sb) {
 		super.buildString(sb);
 		sb.append(", code: ").append(code);
+		sb.append(", root: ").append(isRoot());
+		sb.append(", leaf: ").append(isLeaf());
 	}
 }

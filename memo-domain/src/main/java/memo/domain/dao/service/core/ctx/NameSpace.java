@@ -16,45 +16,50 @@
  */
 package memo.domain.dao.service.core.ctx;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
-import mojo.dao.core.DataService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import memo.domain.dao.model.core.MountPoint;
 import memo.domain.dao.model.core.Resource;
-import memo.domain.dao.model.core.ctx.IContext;
 import memo.domain.dao.model.core.ctx.IName;
+import memo.domain.dao.model.core.ctx.INameSpace;
 import memo.domain.dao.service.core.ResourceService;
 
 /**
  * Concrete Context implementation.
  */
-public class Context implements IContext {
+public class NameSpace implements INameSpace {
 
-	private DataService<Object> service;
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private ResourceService resourceService;
 	private Resource resource;
 
-	private Map<String, Context> contexts;
+	private NameSpace parent;
+	private Map<String, NameSpace> contexts;
 
-	public Context(ResourceService resourceService, Resource resource) {
+	public NameSpace(ResourceService resourceService, Resource resource, NameSpace parent) {
 		this.resourceService = resourceService;
 		this.resource = resource;
+		this.parent = parent;
 	}
 
 	protected void initContexts() {
-		contexts = new HashMap<String, Context>();
+		logger.debug("initContexts [ " + this + " ]");
+		contexts = new LinkedHashMap<String, NameSpace>();
 
 		for (Resource childNode : resourceService.getChildNodes(resource)) {
-			contexts.put(childNode.getCode(), new Context(resourceService, childNode));
+			contexts.put(childNode.getCode(), new NameSpace(resourceService, childNode, this));
 		}
 	}
 
-	protected Map<String, Context> getContexts() {
+	protected Map<String, NameSpace> getContexts() {
 		if (contexts == null) {
 			initContexts();
 		}
@@ -63,13 +68,13 @@ public class Context implements IContext {
 	}
 
 	@Override
-	public IContext reserveCtx(IName name) {
+	public INameSpace reservePath(IName name) {
 		if (name == null || name.getSize() == 0) {
 			throw new IllegalArgumentException("name must not be empty");
 		}
 
-		Context ctx = this;
-		Context subctx = ctx;
+		NameSpace ctx = this;
+		NameSpace subctx = null;
 
 		for (String ne : name) {
 			if (ctx.resource.isLeaf()) {
@@ -80,7 +85,7 @@ public class Context implements IContext {
 
 			if (subctx == null) {
 				Resource childNode = resourceService.createChildNode(ctx.resource, ne);
-				subctx = new Context(resourceService, childNode);
+				subctx = new NameSpace(resourceService, childNode, ctx);
 				ctx.getContexts().put(ne, subctx);
 			}
 
@@ -91,13 +96,13 @@ public class Context implements IContext {
 	}
 
 	@Override
-	public IContext traverseCtx(IName name) {
+	public INameSpace traversePath(IName name) {
 		if (name == null || name.getSize() == 0) {
 			throw new IllegalArgumentException("name must not be empty");
 		}
 
-		Context ctx = this;
-		Context subctx = ctx;
+		NameSpace ctx = this;
+		NameSpace subctx = null;
 
 		for (Object ne : name) {
 			if (ctx.resource.isLeaf()) {
@@ -117,29 +122,9 @@ public class Context implements IContext {
 	}
 
 	@Override
-	public void bind(IName name, Object obj) {
-		if (name != null) {
-			IContext ctx = reserveCtx(name);
-			ctx.bind(null, obj);
-			return;
-		}
-
-		if (resource.getHint() != null) {
-			throw new RuntimeException("Context [" + resource.getCode() + "] has already been bound.");
-		}
-
-		MountPoint m = (MountPoint) obj;
-		m.setResource(resource);
-		service.update(m);
-
-		resource.setHint(obj.getClass().getName());
-		resource = resourceService.update(resource);
-	}
-
-	@Override
 	public Object rebind(IName name, Object obj) {
 		if (name != null) {
-			IContext ctx = reserveCtx(name);
+			INameSpace ctx = reservePath(name);
 			return ctx.rebind(null, obj);
 		}
 
@@ -147,7 +132,6 @@ public class Context implements IContext {
 
 		MountPoint m = (MountPoint) obj;
 		m.setResource(resource);
-		service.update(m); // TODO
 
 		resource.setHint(obj.getClass().getName());
 		resource = resourceService.update(resource);
@@ -156,47 +140,71 @@ public class Context implements IContext {
 	}
 
 	@Override
-	public void unbind(IName name) {
-		if (name == null || name.getSize() == 0) {
-			throw new IllegalArgumentException("name must not be empty");
+	public Object unbind(IName name) {
+		if (name != null) {
+			INameSpace ctx = traversePath(name);
+			ctx.unbind(null);
 		}
 
-		if (name.getSize() > 1) {
-			IName prefix = name.createPrefix(name.getSize() - 1);
-			IContext ctx = traverseCtx(prefix);
-			IName suffix = name.createSuffix(name.getSize() - 1);
-			ctx.unbind(suffix);
-		}
-		else {
-			Object ne = name.getElement(0);
+		Object result = lookup(name);
 
-			if (getContexts().containsKey(ne)) {
-				Context subctx = getContexts().get(ne);
-				resourceService.delete(subctx.resource.getId());
-				getContexts().remove(ne);
-			}
-			else if (getObjects().containsKey(ne)) {
-				resource.setHint(null);
-				resource = resourceService.update(resource);
-				getObjects().remove(ne);
-			}
-		}
+		resource.setHint(null);
+		resource = resourceService.update(resource);
+
+		return result;
 	}
 
 	@Override
 	public Object lookup(IName name) {
 		if (name != null) {
-			IContext ctx = traverseCtx(name);
+			INameSpace ctx = traversePath(name);
 			return ctx.lookup(null);
 		}
 
-		return resource.getHint(); // TODO
+		return resource.getHint();
 	}
 
 	@Override
 	public Set<?> list() {
-		Set<Object> result = new HashSet<Object>();
+		Set<Object> result = new LinkedHashSet<Object>();
 		result.addAll(contexts.keySet());
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		Name name = new Name();
+		NameSpace ns = this;
+
+		while (ns != null && !ns.resource.isRoot()) {
+			name.insert(0, ns.resource.getCode());
+			ns = ns.parent;
+		}
+
+		return name.toString();
+	}
+
+	@Override
+	public String toTreeString() {
+		StringBuilder sb = new StringBuilder();
+		printTree(0, sb);
+		return sb.toString();
+	}
+
+	public void printTree(int d, StringBuilder sb) {
+		for (int i = 0; i < d; ++i) {
+			sb.append("\t");
+		}
+
+		sb.append(resource.getCode());
+		sb.append(" --> ");
+		sb.append(resource.getHint());
+		sb.append("\n");
+
+		d++;
+
+		for (Entry<String, NameSpace> entry : getContexts().entrySet()) {
+			entry.getValue().printTree(d, sb);
+		}
 	}
 }

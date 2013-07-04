@@ -21,34 +21,31 @@ import java.util.Set;
 /**
  * Hierarchical data structure.
  * <p>
- * Context(s) play a role analogous to that of directories in a filesystem, each
- * of wich can contain a number of registered logical names bound with certain
- * values - either subcontexts or other arbitrary objects.
+ * INameSpace(s) play a role analogous to that of directories in a filesystem,
+ * each of which can contain a number of registered logical names bound with
+ * certain values - either subcontexts or other arbitrary objects.
  * <p>
  * <strong>How to use</strong>
  * <p>
- * Context hierarchies can be created explicitly by using the
- * <i>reserveCtx()</i> method or implicitly with the <i>bind()</i> and
- * <i>rebind()</i> methods.
+ * INameSpace hierarchies can be created explicitly by using the
+ * <i>reserveCtx()</i> method or implicitly with the <i>rebind()</i> method.
  * <p>
  * For example, given a context "c" and a name "n" like "/programs/java", a
  * <i>c.reserveCtx(n)</i> call would create a subcontext binded as "programs"
  * inside "c" and another subcontext binded as "java" inside "programs".
  * <p>
- * Likewise a <i>c.bind(n, obj)</i> or a <i>c.rebind(n, obj)</i> call would
- * implicitly create a subcontext binded as "programs" inside "c" and bind "obj"
- * as "java" inside "programs".
+ * Likewise a <i>c.rebind(n, obj)</i> call would implicitly create a subcontext
+ * binded as "programs" inside "c" and bind "obj" as "java" inside "programs".
  * <p>
- * It should be pointed out that <i>bind() and rebind()</i> do not treat other
- * contexts passed as arguments specialy, rather everything gets bind as a
- * common object.
+ * It should be pointed out that rebind()</i> do not treat other contexts passed
+ * as arguments specially, rather everything gets bind as a common object.
  * <p>
- * Context's methods can be grouped as such:
+ * INameSpace's methods can be grouped as such:
  * <ul>
  * <li>Methods that will try to create any missing intermediate subcontexts -
  * and fail if they can't:
  * <ul>
- * <li>reserveCtx(), bind() and rebind()</li>
+ * <li>reserveCtx() and rebind()</li>
  * </ul>
  * </li>
  * <li>Methods that require the necessary subcontexts to exist - and fail if
@@ -59,7 +56,7 @@ import java.util.Set;
  * </li>
  * </ul>
  */
-public interface IContext {
+public interface INameSpace {
 
 	/**
 	 * Reserves the given name for contextual use by making sure that each of
@@ -70,7 +67,7 @@ public interface IContext {
 	 * @throws RuntimeException if any of the name elements has been bound as a
 	 * leaf rather as a hub.
 	 */
-	IContext reserveCtx(IName name);
+	INameSpace reservePath(IName name);
 
 	/**
 	 * Traverses the given name and returns the terminal subcontext.
@@ -80,18 +77,7 @@ public interface IContext {
 	 * @throws RuntimeException if any of the name elements is not bound
 	 * <b><u>or</u></b> has been bound as a leaf rather as a hub.
 	 */
-	IContext traverseCtx(IName name);
-
-	/**
-	 * Binds a name to an object.
-	 * 
-	 * @param name the path to use for the operation; must not be empty.
-	 * @param obj the object to bind.
-	 * @throws RuntimeException if any of the intermediate name elements has
-	 * been bound as a leaf rather as a hub <b><u>or</u></b> if the terminal
-	 * element has already been bound.
-	 */
-	void bind(IName name, Object obj);
+	INameSpace traversePath(IName name);
 
 	/**
 	 * Binds a name to an object.
@@ -114,10 +100,11 @@ public interface IContext {
 	 * been bound.
 	 * 
 	 * @param name the path to use for the operation; must not be empty.
+	 * @return the object previously related with the name.
 	 * @throws RuntimeException if any of the intermediate name elements is not
 	 * bound <b><u>or</u></b> has been bound as a leaf rather as a hub.
 	 */
-	void unbind(IName name);
+	Object unbind(IName name);
 
 	/**
 	 * Retrieves the object related to the specified name.
@@ -135,4 +122,9 @@ public interface IContext {
 	 * @return a collection with the local names in this context.
 	 */
 	Set<?> list();
+
+	/**
+	 * Prints a debug string.
+	 */
+	String toTreeString();
 }
