@@ -54,11 +54,11 @@ public class NameSpaceTest extends BaseTest {
 
 	public void testBasics() {
 		log("Reserving: /My Documents/Images");
-		INameSpace imagesCtx = ns.reservePath(new Name("My Documents", "Images"));
+		INameSpace imagesCtx = ns.createPath(new Name("My Documents", "Images"));
 		log("imagesCtx: " + imagesCtx);
 
 		log("Reserving: /My Documents/Videos");
-		INameSpace videosCtx = ns.reservePath(new Name("My Documents", "Videos"));
+		INameSpace videosCtx = ns.createPath(new Name("My Documents", "Videos"));
 		log("videosCtx: " + videosCtx);
 
 		log("Binding several values");

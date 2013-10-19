@@ -45,13 +45,13 @@ import java.util.Set;
  * <li>Methods that will try to create any missing intermediate subcontexts -
  * and fail if they can't:
  * <ul>
- * <li>reserveCtx() and rebind()</li>
+ * <li>createPath() and rebind()</li>
  * </ul>
  * </li>
  * <li>Methods that require the necessary subcontexts to exist - and fail if
  * they don't:
  * <ul>
- * <li>traverseCtx(), unbind() and lookup()</li>
+ * <li>lookupPath(), unbind() and lookup()</li>
  * </ul>
  * </li>
  * </ul>
@@ -59,15 +59,15 @@ import java.util.Set;
 public interface INameSpace {
 
 	/**
-	 * Reserves the given name for contextual use by making sure that each of
-	 * it's elements is registered as a subcontext.
+	 * Reserves the given name by making sure that each of it's elements is
+	 * registered as a subcontext.
 	 * 
 	 * @param name the path to use for the operation; must not be empty.
 	 * @return the subcontext related to the terminal name element.
 	 * @throws RuntimeException if any of the name elements has been bound as a
 	 * leaf rather as a hub.
 	 */
-	INameSpace reservePath(IName name);
+	INameSpace createPath(IName name);
 
 	/**
 	 * Traverses the given name and returns the terminal subcontext.
@@ -77,7 +77,7 @@ public interface INameSpace {
 	 * @throws RuntimeException if any of the name elements is not bound
 	 * <b><u>or</u></b> has been bound as a leaf rather as a hub.
 	 */
-	INameSpace traversePath(IName name);
+	INameSpace lookupPath(IName name);
 
 	/**
 	 * Binds a name to an object.

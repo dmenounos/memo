@@ -68,7 +68,7 @@ public class NameSpace implements INameSpace {
 	}
 
 	@Override
-	public INameSpace reservePath(IName name) {
+	public INameSpace createPath(IName name) {
 		if (name == null || name.getSize() == 0) {
 			throw new IllegalArgumentException("name must not be empty");
 		}
@@ -96,7 +96,7 @@ public class NameSpace implements INameSpace {
 	}
 
 	@Override
-	public INameSpace traversePath(IName name) {
+	public INameSpace lookupPath(IName name) {
 		if (name == null || name.getSize() == 0) {
 			throw new IllegalArgumentException("name must not be empty");
 		}
@@ -124,7 +124,7 @@ public class NameSpace implements INameSpace {
 	@Override
 	public Object rebind(IName name, Object obj) {
 		if (name != null) {
-			INameSpace ctx = reservePath(name);
+			INameSpace ctx = createPath(name);
 			return ctx.rebind(null, obj);
 		}
 
@@ -142,7 +142,7 @@ public class NameSpace implements INameSpace {
 	@Override
 	public Object unbind(IName name) {
 		if (name != null) {
-			INameSpace ctx = traversePath(name);
+			INameSpace ctx = lookupPath(name);
 			ctx.unbind(null);
 		}
 
@@ -157,7 +157,7 @@ public class NameSpace implements INameSpace {
 	@Override
 	public Object lookup(IName name) {
 		if (name != null) {
-			INameSpace ctx = traversePath(name);
+			INameSpace ctx = lookupPath(name);
 			return ctx.lookup(null);
 		}
 
