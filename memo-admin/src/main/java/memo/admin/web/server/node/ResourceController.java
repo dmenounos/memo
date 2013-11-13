@@ -32,32 +32,32 @@ import mojo.dao.core.DataService;
 import mojo.dao.core.spec.ByKey;
 import mojo.dao.core.spec.Select;
 
-import memo.domain.dao.model.node.Node;
+import memo.domain.dao.model.core.Resource;
 
 @Controller
 @RequestMapping("/node")
-public class NodeController {
+public class ResourceController {
 
 	@Autowired
 	@Qualifier("nodeService")
-	private DataService<Node> nodeService;
+	private DataService<Resource> nodeService;
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Node> doSelect(@RequestParam(required = false) Integer parentNodeId) {
+	public List<Resource> doSelect(@RequestParam(required = false) Integer parentNodeId) {
 		ByKey filter = new ByKey().property("parentNode").key(parentNodeId);
-		Select<Node> select = new Select<Node>(filter).order("code");
-		DataPage<Node> page = nodeService.select(select);
+		Select<Resource> select = new Select<Resource>(filter).order("code");
+		DataPage<Resource> page = nodeService.select(select);
 		return page.getData();
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public void doInsert(@RequestBody Node node) {
+	public void doInsert(@RequestBody Resource node) {
 		nodeService.insert(node);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public void doUpdate(@RequestBody Node node) {
+	public void doUpdate(@RequestBody Resource node) {
 		nodeService.update(node);
 	}
 }

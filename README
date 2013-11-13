@@ -51,12 +51,12 @@ Developing with Eclipse
 
    3. Uncheck the default option that creates a "web.xml" file.
 
-   4. Change the default "WebContent" directory to "war".
+   4. Change the default "WebContent" directory to "web".
 
 4. Open the "Deployment Assembly" panel, in the "Properties" dialog.
    Normally the following entries should be present by default:
 
-   /war                                            /
+   /web                                            /
    /src/main/java                                  WEB-INF/classes
    /src/main/resources                             WEB-INF/classes
 
