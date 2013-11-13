@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import mojo.web.core.WebContext;
+import mojo.web.core.BaseContext;
 import mojo.web.core.WebException;
 
 import memo.domain.dao.model.user.User;
@@ -51,7 +51,7 @@ public class AbstractLoginController {
 	 * Handles login (internally).
 	 */
 	protected void signIn(HttpSession session, User user) {
-		session.setAttribute(WebContext.CONTEXT_USER_ATTR, user);
+		session.setAttribute(BaseContext.CONTEXT_USER_ATTR, user);
 	}
 
 	protected User extractUser(HttpServletRequest request) {

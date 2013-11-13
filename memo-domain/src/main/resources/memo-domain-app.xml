@@ -5,7 +5,7 @@
 
 	<import resource="classpath:memo-domain-dao.xml" />
 
-	<bean id="auditContext" class="mojo.web.core.ProxyContextFactoryBean" />
+	<bean id="auditContext" class="mojo.web.core.v1.ProxyContextFactoryBean" />
 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource">

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import mojo.web.core.WebContext;
+import mojo.web.core.BaseContext;
 import mojo.web.openid.OpenIDService;
 import mojo.web.openid.OpenIDService.RequestData;
 import mojo.web.openid.OpenIDService.ResponseData;
@@ -109,7 +109,7 @@ public class OpenIDLoginController extends AbstractLoginController {
 			// user not found; initiate sign-up
 			mav.addObject("attributes", responseData.getAttributes());
 			request.getSession().setAttribute(IDENTIFIER_ATTR, responseData.getIdentifier());
-			request.getSession().removeAttribute(WebContext.CONTEXT_USER_ATTR);
+			request.getSession().removeAttribute(BaseContext.CONTEXT_USER_ATTR);
 		}
 
 		return mav;
