@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.service.core.ctx;
+package memo.domain.dao.service.core.ns;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -27,12 +27,12 @@ import org.slf4j.LoggerFactory;
 
 import memo.domain.dao.model.core.MountPoint;
 import memo.domain.dao.model.core.Resource;
-import memo.domain.dao.model.core.ctx.IName;
-import memo.domain.dao.model.core.ctx.INameSpace;
+import memo.domain.dao.model.core.ns.IName;
+import memo.domain.dao.model.core.ns.INameSpace;
 import memo.domain.dao.service.core.ResourceService;
 
 /**
- * Concrete Context implementation.
+ * Concrete NameSpace implementation.
  */
 public class NameSpace implements INameSpace {
 
@@ -42,7 +42,7 @@ public class NameSpace implements INameSpace {
 	private Resource resource;
 
 	private NameSpace parent;
-	private Map<String, NameSpace> contexts;
+	private Map<String, NameSpace> contents;
 
 	public NameSpace(ResourceService resourceService, Resource resource, NameSpace parent) {
 		this.resourceService = resourceService;
@@ -52,19 +52,19 @@ public class NameSpace implements INameSpace {
 
 	protected void initContexts() {
 		logger.debug("initContexts [ " + this + " ]");
-		contexts = new LinkedHashMap<String, NameSpace>();
+		contents = new LinkedHashMap<String, NameSpace>();
 
 		for (Resource childNode : resourceService.getChildNodes(resource)) {
-			contexts.put(childNode.getCode(), new NameSpace(resourceService, childNode, this));
+			contents.put(childNode.getCode(), new NameSpace(resourceService, childNode, this));
 		}
 	}
 
 	protected Map<String, NameSpace> getContexts() {
-		if (contexts == null) {
+		if (contents == null) {
 			initContexts();
 		}
 
-		return contexts;
+		return contents;
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class NameSpace implements INameSpace {
 	@Override
 	public Set<?> list() {
 		Set<Object> result = new LinkedHashSet<Object>();
-		result.addAll(contexts.keySet());
+		result.addAll(contents.keySet());
 		return result;
 	}
 
@@ -187,11 +187,11 @@ public class NameSpace implements INameSpace {
 	@Override
 	public String toTreeString() {
 		StringBuilder sb = new StringBuilder();
-		printTree(0, sb);
+		buildString(sb, 0);
 		return sb.toString();
 	}
 
-	public void printTree(int d, StringBuilder sb) {
+	public void buildString(StringBuilder sb, int d) {
 		for (int i = 0; i < d; ++i) {
 			sb.append("\t");
 		}
@@ -204,7 +204,7 @@ public class NameSpace implements INameSpace {
 		d++;
 
 		for (Entry<String, NameSpace> entry : getContexts().entrySet()) {
-			entry.getValue().printTree(d, sb);
+			entry.getValue().buildString(sb, d);
 		}
 	}
 }

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.service.core.ctx;
+package memo.domain.dao.service.core.ns;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import memo.domain.dao.model.core.ctx.IName;
+import memo.domain.dao.model.core.ns.IName;
 
 /**
  * Abstract Name implementation.

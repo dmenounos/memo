@@ -27,19 +27,19 @@
 
 	<!-- GENERIC REPOSITORIES -->
 
-	<bean id="countryRepository" class="mojo.dao.core.jpa.JpaRepository">
+	<bean id="countryRepository" class="mojo.dao.core.exec.JpaRepository">
 		<property name="entityType" value="memo.domain.dao.model.misc.Country" />
 	</bean>
 
-	<bean id="languageRepository" class="mojo.dao.core.jpa.JpaRepository">
+	<bean id="languageRepository" class="mojo.dao.core.exec.JpaRepository">
 		<property name="entityType" value="memo.domain.dao.model.misc.Language" />
 	</bean>
 
-	<bean id="userRepository" class="mojo.dao.core.jpa.JpaRepository">
+	<bean id="userRepository" class="mojo.dao.core.exec.JpaRepository">
 		<property name="entityType" value="memo.domain.dao.model.user.User" />
 	</bean>
 
-	<bean id="userRoleRepository" class="mojo.dao.core.jpa.JpaRepository">
+	<bean id="userRoleRepository" class="mojo.dao.core.exec.JpaRepository">
 		<property name="entityType" value="memo.domain.dao.model.user.UserRole" />
 	</bean>
 

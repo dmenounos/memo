@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.model.core.ctx;
+package memo.domain.dao.model.core.ns;
 
 /**
  * Logical path used in conjunction with Context.

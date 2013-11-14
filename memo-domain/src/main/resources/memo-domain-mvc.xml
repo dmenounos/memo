@@ -56,8 +56,8 @@
 		<property name="interceptors">
 			<list>
 				<ref bean="localeChangeInterceptor" />
-				<bean class="mojo.web.core.WebContextInterceptor" />
-				<bean class="mojo.web.core.RequireLoginInterceptor">
+				<bean class="mojo.web.core.v1.WebContextInterceptor" />
+				<bean class="mojo.web.core.v3.RequireLoginInterceptor">
 					<property name="suffix" value=".pro" />
 				</bean>
 			</list>
@@ -111,7 +111,6 @@
 				<entry key="Resource"   value="memo.domain.dao.model.core.Resource" />
 				<entry key="Country"    value="memo.domain.dao.model.misc.Country" />
 				<entry key="Language"   value="memo.domain.dao.model.misc.Language" />
-				<entry key="NodeInfo"   value="memo.domain.dao.model.node.NodeInfo" />
 				<entry key="PostRule"   value="memo.domain.dao.model.post.PostInfo" />
 				<entry key="OpenID"     value="memo.domain.dao.model.user.OpenID" />
 				<entry key="User"       value="memo.domain.dao.model.user.User" />

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.dao.model.core.ctx;
+package memo.domain.dao.model.core.ns;
 
 import java.util.Set;
 
@@ -28,27 +28,17 @@ import java.util.Set;
  * <strong>How to use</strong>
  * <p>
  * INameSpace hierarchies can be created explicitly by using the
- * <i>reserveCtx()</i> method or implicitly with the <i>rebind()</i> method.
- * <p>
- * For example, given a context "c" and a name "n" like "/programs/java", a
- * <i>c.reserveCtx(n)</i> call would create a subcontext binded as "programs"
- * inside "c" and another subcontext binded as "java" inside "programs".
- * <p>
- * Likewise a <i>c.rebind(n, obj)</i> call would implicitly create a subcontext
- * binded as "programs" inside "c" and bind "obj" as "java" inside "programs".
- * <p>
- * It should be pointed out that rebind()</i> do not treat other contexts passed
- * as arguments specially, rather everything gets bind as a common object.
+ * <i>createPath()</i> method or implicitly with the <i>rebind()</i> method.
  * <p>
  * INameSpace's methods can be grouped as such:
  * <ul>
- * <li>Methods that will try to create any missing intermediate subcontexts -
+ * <li>Methods that will try to create any missing intermediate sub-contexts -
  * and fail if they can't:
  * <ul>
  * <li>createPath() and rebind()</li>
  * </ul>
  * </li>
- * <li>Methods that require the necessary subcontexts to exist - and fail if
+ * <li>Methods that require the necessary sub-contexts to exist - and fail if
  * they don't:
  * <ul>
  * <li>lookupPath(), unbind() and lookup()</li>
@@ -74,8 +64,8 @@ public interface INameSpace {
 	 * 
 	 * @param name the path to use for the operation; must not be empty.
 	 * @return the subcontext related to the terminal name element.
-	 * @throws RuntimeException if any of the name elements is not bound
-	 * <b><u>or</u></b> has been bound as a leaf rather as a hub.
+	 * @throws RuntimeException if any of the name elements is not bound or has
+	 * been bound as a leaf rather as a hub.
 	 */
 	INameSpace lookupPath(IName name);
 
@@ -102,7 +92,7 @@ public interface INameSpace {
 	 * @param name the path to use for the operation; must not be empty.
 	 * @return the object previously related with the name.
 	 * @throws RuntimeException if any of the intermediate name elements is not
-	 * bound <b><u>or</u></b> has been bound as a leaf rather as a hub.
+	 * bound or has been bound as a leaf rather as a hub.
 	 */
 	Object unbind(IName name);
 
@@ -112,7 +102,7 @@ public interface INameSpace {
 	 * @param name the path to use for the operation; must not be empty.
 	 * @return the object bound to path.
 	 * @throws RuntimeException if any of the intermediate path elements is not
-	 * bound <b><u>or</u></b> has been bound as a leaf rather as a hub.
+	 * bound or has been bound as a leaf rather as a hub.
 	 */
 	Object lookup(IName name);
 

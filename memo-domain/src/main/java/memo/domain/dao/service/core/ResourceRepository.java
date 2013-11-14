@@ -22,7 +22,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import mojo.dao.core.jpa.JpaRepository;
+import mojo.dao.core.exec.JpaRepository;
 
 import memo.domain.dao.model.core.Permission;
 import memo.domain.dao.model.core.Resource;

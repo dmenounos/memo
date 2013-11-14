@@ -33,11 +33,11 @@ public class Permission extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
 	// @formatter:off
-	public static final int ALL = 7;
-	public static final int READ = 4;
-	public static final int WRITE = 2;
+	public static final int ALL     = 7;
+	public static final int READ    = 4;
+	public static final int WRITE   = 2;
 	public static final int EXECUTE = 1;
-	public static final int NONE = 0;
+	public static final int NONE    = 0;
 	// @formatter:on
 
 	private int pos;

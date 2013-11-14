@@ -89,13 +89,6 @@ public class Resource extends AuditableEntity {
 		this.parentNode = parentNode;
 	}
 
-	/**
-	 * Helper method.
-	 */
-	public boolean hasChildNodes() {
-		return childNodes != null && !childNodes.isEmpty();
-	}
-
 	@OrderBy("id")
 	@OneToMany(mappedBy = "parentNode",
 	cascade = { CascadeType.REMOVE })
@@ -109,6 +102,13 @@ public class Resource extends AuditableEntity {
 
 	public void setChildNodes(List<Resource> childNodes) {
 		this.childNodes = childNodes;
+	}
+
+	/**
+	 * Helper method.
+	 */
+	public boolean hasChildNodes() {
+		return childNodes != null && !childNodes.isEmpty();
 	}
 
 	/**

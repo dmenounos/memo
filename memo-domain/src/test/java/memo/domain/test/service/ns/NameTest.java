@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.domain.test.service.ctx;
+package memo.domain.test.service.ns;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import memo.domain.dao.model.core.ctx.IName;
-import memo.domain.dao.service.core.ctx.Name;
+import memo.domain.dao.model.core.ns.IName;
+import memo.domain.dao.service.core.ns.Name;
 import memo.domain.test.BaseTest;
 
 public class NameTest extends BaseTest {
