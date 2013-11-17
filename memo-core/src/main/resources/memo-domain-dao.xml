@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<import resource="classpath:mojo-dao.xml" />
+	<context:component-scan base-package="memo.core.dao" />
+
+	<!-- 7.6 Proxying mechanisms -->
+	<aop:config proxy-target-class="true">
+
+		<aop:aspect ref="auditAspect">
+			<aop:pointcut id="insertOperation" expression="execution(* *..dao..*Repository.insert(..)) and args(query)" />
+			<aop:before pointcut-ref="insertOperation" method="insert" />
+		</aop:aspect>
+
+		<aop:aspect ref="auditAspect">
+			<aop:pointcut id="updateOperation" expression="execution(* *..dao..*Repository.update(..)) and args(query)" />
+			<aop:before pointcut-ref="updateOperation" method="update" />
+		</aop:aspect>
+
+	</aop:config>
+
+	<!-- GENERIC REPOSITORIES -->
+
+	<bean id="countryRepository" class="mojo.dao.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.dao.model.misc.Country" />
+	</bean>
+
+	<bean id="languageRepository" class="mojo.dao.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.dao.model.misc.Language" />
+	</bean>
+
+	<bean id="userRepository" class="mojo.dao.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.dao.model.user.User" />
+	</bean>
+
+	<bean id="userRoleRepository" class="mojo.dao.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.dao.model.user.UserRole" />
+	</bean>
+
+	<!-- GENERIC SERVICES -->
+
+	<bean id="countryService" class="mojo.dao.core.DataService">
+		<property name="repository" ref="countryRepository" />
+		<property name="validation">
+			<bean class="memo.core.dao.validation.CountryValidation" />
+		</property>
+	</bean>
+
+	<bean id="languageService" class="mojo.dao.core.DataService">
+		<property name="repository" ref="languageRepository" />
+		<property name="validation">
+			<bean class="memo.core.dao.validation.LanguageValidation" />
+		</property>
+	</bean>
+
+	<bean id="userService" class="mojo.dao.core.DataService">
+		<property name="repository" ref="userRepository" />
+		<property name="validation">
+			<bean class="memo.core.dao.validation.UserValidation" />
+		</property>
+	</bean>
+
+	<bean id="userRoleService" class="mojo.dao.core.DataService">
+		<property name="repository" ref="userRoleRepository" />
+		<property name="validation">
+			<bean class="memo.core.dao.validation.UserRoleValidation" />
+		</property>
+	</bean>
+
+</beans>

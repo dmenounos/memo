@@ -18,9 +18,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>memo-admin</module>
-		<module>memo-domain</module>
-		<module>memo-portal</module>
+		<module>memo-core</module>
+		<module>memo-view</module>
 	</modules>
 
 	<dependencyManagement>
@@ -28,19 +27,13 @@
 
 			<dependency>
 				<groupId>memo</groupId>
-				<artifactId>memo-admin</artifactId>
+				<artifactId>memo-core</artifactId>
 				<version>1.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>memo</groupId>
-				<artifactId>memo-domain</artifactId>
-				<version>1.0</version>
-			</dependency>
-
-			<dependency>
-				<groupId>memo</groupId>
-				<artifactId>memo-portal</artifactId>
+				<artifactId>memo-view</artifactId>
 				<version>1.0</version>
 			</dependency>
 
