@@ -53,7 +53,7 @@ public abstract class BaseTest extends TestCase {
 	protected BaseTest(String name) {
 		super(name);
 
-		appContext = SpringUtils.getApplicationContext("memo-domain-test.xml");
+		appContext = SpringUtils.getApplicationContext("memo-core-test.xml");
 		transactionManager = getBean("transactionManager");
 
 		repository = getBean("repository");

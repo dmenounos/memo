@@ -9,3 +9,6 @@ out
 
 derby.log
 build.properties
+
+# kde
+.directory

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tls" uri="http://tiles.apache.org/tags-tiles" %>
 
-<fmt:setBundle basename="memo.core.web.server.messages" scope="session" />
+<fmt:setBundle basename="memo.view.web.server.messages" scope="session" />
 <c:set value="${pageContext.request.contextPath}" var="contextPath" scope="session" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
