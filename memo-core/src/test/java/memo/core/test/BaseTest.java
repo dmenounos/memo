@@ -80,8 +80,8 @@ public abstract class BaseTest extends TestCase {
 		return (User) auditContext.getUser();
 	}
 
-	protected UserRole getDefaultUserRole(int index) {
-		return getDefaultUser().getRoles().get(index);
+	protected UserRole getDefaultUserRole(int roleIndex) {
+		return getDefaultUser().getRoles().get(roleIndex);
 	}
 
 	@Override

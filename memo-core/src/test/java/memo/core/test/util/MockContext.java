@@ -27,10 +27,6 @@ public class MockContext implements AuditContext {
 	private User user;
 
 	public MockContext() {
-		initUser();
-	}
-
-	protected void initUser() {
 		user = new User();
 		user.setFullname("Jesse Blue");
 		user.setNickname("Broken Heart");

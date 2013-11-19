@@ -24,8 +24,6 @@ import java.beans.PropertyDescriptor;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Node;
-
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -40,13 +38,13 @@ import memo.core.dao.service.core.PermissionService;
 import memo.core.dao.service.core.ResourceService;
 import memo.core.test.BaseTest;
 
-public class NodeTest extends BaseTest {
+public class ResourceTest extends BaseTest {
 
 	private PermissionService permissionService;
 	private ResourceService resourceService;
 	private Resource rootNode;
 
-	protected NodeTest(String name) {
+	protected ResourceTest(String name) {
 		super(name);
 
 		permissionService = getBean("permissionService");
@@ -133,14 +131,11 @@ public class NodeTest extends BaseTest {
 		Resource folder = rootNode.createChildNode("folder");
 		folder = resourceService.insert(folder);
 
-		log("Retrieving folder #" + folder.getId());
-		Resource loadedFolder = resourceService.findById(folder.getId());
-		assertEqualNodes(folder, loadedFolder);
-
-		log("Creating file with none permissions");
+		log("Creating file without permissions");
 		Resource file = folder.createChildNode("file");
 		file = resourceService.insert(file);
 
+		log("Creating file permission: none");
 		Permission fileRule = file.createPermission();
 		fileRule.setUserRole(getDefaultUserRole(0));
 		fileRule.setPermission(Permission.NONE);
@@ -204,10 +199,10 @@ public class NodeTest extends BaseTest {
 	 */
 	public void testIntrospection() {
 		try {
-			BeanInfo beanInfo = Introspector.getBeanInfo(Node.class);
+			BeanInfo beanInfo = Introspector.getBeanInfo(Resource.class);
 			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
 
-			log("Bean: " + Node.class);
+			log("Bean: " + Resource.class);
 
 			for (PropertyDescriptor descriptor : propertyDescriptors) {
 				String read = descriptor.getReadMethod() != null ? "yes" : "no";
@@ -239,9 +234,9 @@ public class NodeTest extends BaseTest {
 
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
-		suite.addTest(new NodeTest("testRootCRUD"));
-		suite.addTest(new NodeTest("testNodeCRUD"));
-		suite.addTest(new NodeTest("testNodeRules"));
+		suite.addTest(new ResourceTest("testRootCRUD"));
+		suite.addTest(new ResourceTest("testNodeCRUD"));
+		suite.addTest(new ResourceTest("testNodeRules"));
 		// suite.addTest(new NodeTest("testIntrospection"));
 		return suite;
 	}

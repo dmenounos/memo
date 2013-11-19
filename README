@@ -17,8 +17,8 @@ System requirements
 -------------------
 
 JDK   6   - http://java.sun.com/
-Maven 3.0 - http://maven.apache.org/
-Mojo  1.0 - http://github.com/dmenounos/mojo
+Maven 3.x - http://maven.apache.org/
+Mojo  1.x - http://github.com/dmenounos/mojo
 
 
 
@@ -42,47 +42,18 @@ Developing with Eclipse
 2. Import them into Eclipse:
    File -> Import -> Existing Projects into Workspace
 
-3. Convert "memo-portal" to a dynamic web project:
-
-   1. From the "Properties" dialog and "Project Facets" panel,
-      check the "Dynamic Web Module" and "Java" facets.
-
-   2. Change the facet version to 2.5, i.e. Java EE 5.
-
-   3. Uncheck the default option that creates a "web.xml" file.
-
-   4. Change the default "WebContent" directory to "web".
-
-4. Open the "Deployment Assembly" panel, in the "Properties" dialog.
+3. Open the "Deployment Assembly" panel, in the "Properties" dialog.
    Normally the following entries should be present by default:
 
    /web                                            /
    /src/main/java                                  WEB-INF/classes
    /src/main/resources                             WEB-INF/classes
 
-   1. Map the, maven resolved, jar dependencies:
-   /out/memo-portal-1.0/WEB-INF/lib                WEB-INF/lib
-
-   2. Map the, maven resolved, jsp files:
-   /out/memo-portal-1.0/WEB-INF/jsp                WEB-INF/jsp
-
-   3. Map the, GWT generated, javascript code:
-   /out/memo-portal-1.0/gwt                        gwt
+   Map the, maven resolved, jsp files:
+   /out/memo-view-1.0/WEB-INF/jsp                  WEB-INF/jsp
 
 5. Open the "External Tool Configurations" and create one as such:
 
    Location:            <MAVEN_INSTALL_PATH>/bin/mvn
-   Working Directory:   ${workspace_loc:/memo-portal}
-   Arguments:           antrun:run
-
-6. Open the "Debug Configurations" and create one as such:
-
-   Project: memo-portal
-
-Finally the following describe the different run and debug options:
-
-*) By starting the configuration #5, you will be able to dynamically change
-   GWT client code, i.e. java classes
-
-*) By starting the configuration #6, you will be able to dynamically debug
-   GWT client code, i.e. java classes.
+   Working Directory:   ${workspace_loc:/memo-view}
+   Arguments:           prepare-package -DskipTests

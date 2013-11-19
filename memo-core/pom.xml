@@ -22,40 +22,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>mojo</groupId>
-			<artifactId>mojo-gwt</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>mojo</groupId>
-			<artifactId>mojo-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<!-- provided -->
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<!-- provided -->
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<!-- provided -->
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-		</dependency>
-
-		<dependency>
-			<!-- provided -->
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-dev</artifactId>
-		</dependency>
-
-		<dependency>
 			<!-- test -->
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
@@ -68,25 +34,5 @@
 		</dependency>
 
 	</dependencies>
-
-	<build>
-		<resources>
-
-			<resource>
-				<!-- default resources -->
-				<directory>${project.basedir}/src/main/resources</directory>
-			</resource>
-
-			<resource>
-				<!-- gwt sources and web resources -->
-				<directory>${project.basedir}/src/main/java</directory>
-				<includes>
-					<include>**/web/client/**</include>
-					<include>**/*.jsp</include>
-				</includes>
-			</resource>
-
-		</resources>
-	</build>
 
 </project>
