@@ -120,3 +120,23 @@ $(function() {
 	+ "<div class='ajaxIndicator'></div>"
 	+ "</div>").appendTo("html > body");
 });
+
+$.ajaxSetup({
+
+	error: function(jqXHR, textStatus, errorThrown) {
+		if (jqXHR.status == 403) {
+			alert("Requires Login");
+		}
+	}
+});
+
+obj.ns('session', {
+
+	signIn: function() {
+		console.log("signIn");
+	},
+
+	signUp: function(user) {
+		console.log("signUp user: " + user);
+	}
+});

@@ -25,10 +25,10 @@
 	<div class="container_12">
 		<div class="grid_col grid_9">
 
-			<ul id="menu">
-				<li id="menu-forum"><a href="#">Συζητήσεις</a></li>
-				<li id="menu-users"><a href="#">Μέλη</a></li>
-			</ul>
+			<div class="menu">
+				<div class="menu-item forum"><a href="#">Συζητήσεις</a></div>
+				<div class="menu-item users"><a href="#">Μέλη</a></div>
+			</div>
 
 		</div>
 		<div class="grid_col grid_3">
