@@ -76,7 +76,10 @@ LoginPopup = UIView.extend({
 
 				this.win = this.getEl().kendoWindow({
 					title: title.html(),
-					modal: true
+					modal: true,
+					deactivate: $.proxy(function() {
+						this.win.destroy();
+					}, this)
 				}).getKendoWindow();
 
 				this.getEl().html($wrap.html());
@@ -96,7 +99,10 @@ ErrorPopup = UIView.extend({
 
 		this.win = this.getEl().kendoWindow({
 			title: title.html(),
-			modal: true
+			modal: true,
+			deactivate: $.proxy(function() {
+				this.win.destroy();
+			}, this)
 		}).getKendoWindow();
 
 		this.getEl().html($wrap.html());

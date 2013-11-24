@@ -23,13 +23,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import mojo.web.util.SpringUtils;
+
 @Controller
 @RequestMapping("/login")
-public class OpenIDController {
+public class LoginPromptController {
 
 	@RequestMapping(value = "/prompt", method = RequestMethod.GET)
-	public void doRoot(HttpServletRequest req, HttpServletResponse res) {
-		OpenIDPage page = new OpenIDPage();
+	public void render(HttpServletRequest req, HttpServletResponse res) {
+		LoginPromptPage page = SpringUtils.getComponent(LoginPromptPage.class);
 		page.render();
 	}
 }

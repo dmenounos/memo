@@ -2,47 +2,41 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="m" uri="http://mojo.example.org/component" %>
 
-<fmt:message key="memo.view.web.client.login.OpenIDPanel.buttonsLabel"  var="buttonsLabel" />
-<fmt:message key="memo.view.web.client.login.OpenIDPanel.emptyOpenID"   var="emptyOpenID" />
-<fmt:message key="memo.view.web.client.login.OpenIDPanel.openidInfo"    var="openidInfo" />
-<fmt:message key="memo.view.web.client.login.OpenIDPanel.openidLabel"   var="openidLabel" />
-<fmt:message key="memo.view.web.client.login.OpenIDPanel.submitButton"  var="submitButton" />
+<fmt:message key="memo.view.web.html.login.prompt.OpenIDLoginPrompt.buttonsLabel" var="buttonsLabel" />
+<fmt:message key="memo.view.web.html.login.prompt.OpenIDLoginPrompt.emptyOpenID"  var="emptyOpenID" />
+<fmt:message key="memo.view.web.html.login.prompt.OpenIDLoginPrompt.openidInfo"   var="openidInfo" />
+<fmt:message key="memo.view.web.html.login.prompt.OpenIDLoginPrompt.openidLabel"  var="openidLabel" />
+<fmt:message key="memo.view.web.html.login.prompt.OpenIDLoginPrompt.submitButton" var="submitButton" />
 
-<div class="container">
-	<div class="OpenIDPanel row">
+<div class="${bean.id} row">
 
-		<div class="centerPanel col-md-7">
-			<h3>${buttonsLabel}</h3>
-			<div class="buttonsPanel row">
-				<div class="col-md-12">
-					<button class="btn btn-default btn-google" title="Google"></button>
-					<button class="btn btn-default btn-yahoo"  title="Yahoo"></button>
-					<button class="btn btn-default btn-openid" title="OpenID"></button>
-				</div>
-			</div>
-			<div class="formPanel row">
-				<div class="col-md-12">
-					<label for="openid_identifier">${openidLabel}</label>
-					<div class="input-group">
-						<input type="text" name="openid_identifier" class="form-control" />
-						<span class="input-group-btn">
-							<button class="btn btn-default btn-submit">${submitButton}</button>
-						</span>
-					</div>
-				</div>
+	<div class="col-md-7">
+		<h3>${buttonsLabel}</h3>
+		<div class="buttons-panel">
+			<button class="btn btn-default btn-google" title="Google"></button>
+			<button class="btn btn-default btn-yahoo"  title="Yahoo"></button>
+			<button class="btn btn-default btn-openid" title="OpenID"></button>
+		</div>
+		<div class="form-panel">
+			<label for="openid_identifier">${openidLabel}</label>
+			<div class="input-group">
+				<input type="text" name="openid_identifier" class="form-control" />
+				<span class="input-group-btn">
+					<button class="btn btn-default btn-submit">${submitButton}</button>
+				</span>
 			</div>
 		</div>
-
-		<div class="eastPanel col-md-5 col">
-			${openidInfo}
-		</div>
-
 	</div>
+
+	<div class="col-md-5">
+		<div class="info-panel">${openidInfo}</div>
+	</div>
+
 </div>
 
 <script>
 $(function() {
-	var OpenIDPanel = UIView.extend({
+	var OpenIDLoginPrompt = UIView.extend({
 
 		render: function() {
 			$(".btn-google", this.getEl()).on("click", $.proxy(function() {
@@ -84,6 +78,6 @@ $(function() {
 		}
 	});
 
-	(new OpenIDPanel({ el: ".OpenIDPanel" })).render();
+	(new OpenIDLoginPrompt({ el: ".OpenIDLoginPrompt" })).render();
 });
 </script>

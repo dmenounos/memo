@@ -19,13 +19,9 @@ package memo.view.web.html.login.prompt;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import memo.view.web.html.base.BaseTemplate;
+import mojo.web.component.UIComponent;
 
 @Component
 @Scope("prototype")
-public class OpenIDPage extends BaseTemplate {
-
-	public OpenIDPage() {
-		setTitle("Login or Register");
-	}
+public class BasicLoginPrompt extends UIComponent {
 }

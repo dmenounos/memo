@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="m" uri="http://mojo.example.org/component" %>
 
-<div class="container">
-	<div class="content row">
+<div class="main container">
+	<div class="${bean.id} row">
 		<div class="col-md-12 col">
 
 			<h2>TEST LOGIN PAGE</h2>
