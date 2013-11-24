@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.web.html.test;
+package memo.view.web.html.login.prompt;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,17 +23,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import mojo.web.login.RequireLogin;
-import mojo.web.util.SpringUtils;
-
 @Controller
-@RequireLogin
-@RequestMapping("/foo")
-public class TestController {
+@RequestMapping("/login")
+public class OpenIDController {
 
-	@RequestMapping(value = "/bar", method = RequestMethod.GET)
-	public void controller(HttpServletRequest req, HttpServletResponse res) {
-		TestPage page = SpringUtils.getComponent(TestPage.class);
+	@RequestMapping(value = "/prompt", method = RequestMethod.GET)
+	public void doRoot(HttpServletRequest req, HttpServletResponse res) {
+		OpenIDPage page = new OpenIDPage();
 		page.render();
 	}
 }

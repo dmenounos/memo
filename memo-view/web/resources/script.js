@@ -106,18 +106,18 @@ obj.ns = function(str, val)
 
 function showLoadingMask() {
 	window.loadingMaskId = setTimeout(function() {
-		$('.ajaxOverlay').fadeIn('fast');
+		$('.ajax-overlay').fadeIn('fast');
 	}, 250);
 }
 
 function hideLoadingMask() {
 	clearTimeout(window.loadingMaskId);
-	$('.ajaxOverlay').fadeOut('fast');
+	$('.ajax-overlay').fadeOut('fast');
 }
 
 $(function() {
-	$("<div class='ajaxOverlay'>"
-	+ "<div class='ajaxIndicator'></div>"
+	$("<div class='ajax-overlay'>"
+	+ "<div class='ajax-indicator'></div>"
 	+ "</div>").appendTo("html > body");
 });
 
@@ -125,7 +125,13 @@ $.ajaxSetup({
 
 	error: function(jqXHR, textStatus, errorThrown) {
 		if (jqXHR.status == 403) {
-			alert("Requires Login");
+			(new LoginPopup()).render();
+		} else {
+			(new ErrorPopup({
+				status: jqXHR.status,
+				statusText: jqXHR.statusText,
+				responseText: jqXHR.responseText
+			})).render();
 		}
 	}
 });

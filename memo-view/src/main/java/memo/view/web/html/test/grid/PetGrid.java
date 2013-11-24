@@ -31,10 +31,6 @@ public class PetGrid extends GridComponent<Pet> {
 	@Autowired
 	private Database database;
 
-	public PetGrid(String id) {
-		super(id);
-	}
-
 	@PostConstruct
 	public void init() {
 		logger.debug("INIT {}", getClass().getName());

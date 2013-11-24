@@ -14,41 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.web.html.test.grid;
+package memo.view.web.html.login.prompt;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import mojo.web.component.grid.GridComponent;
+import memo.view.web.html.base.BaseTemplate;
 
 @Component
 @Scope("prototype")
-public class PersonGrid extends GridComponent<Person> {
+public class OpenIDPage extends BaseTemplate {
 
-	@Autowired
-	private Database database;
-
-	@PostConstruct
-	public void init() {
-		logger.debug("INIT {}", getClass().getName());
-
-		setTitle("Persons");
-
-		Column column;
-
-		column = addColumn();
-		column.setName("firstName");
-		column.setLabel("First Name");
-		column.setWidth("50%");
-
-		column = addColumn();
-		column.setName("lastName");
-		column.setLabel("Last Name");
-		column.setWidth("50%");
-
-		initRecords(database.getPersons());
+	public OpenIDPage() {
+		setTitle("Login or Register");
 	}
 }

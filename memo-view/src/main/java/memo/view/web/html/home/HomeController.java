@@ -14,26 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.web.html.test;
+package memo.view.web.html.home;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import mojo.web.login.RequireLogin;
 import mojo.web.util.SpringUtils;
 
 @Controller
-@RequireLogin
-@RequestMapping("/foo")
-public class TestController {
+public class HomeController {
 
-	@RequestMapping(value = "/bar", method = RequestMethod.GET)
-	public void controller(HttpServletRequest req, HttpServletResponse res) {
-		TestPage page = SpringUtils.getComponent(TestPage.class);
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		System.out.println("### initBinder " + binder.getTarget());
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public void doRoot(HttpServletRequest req, HttpServletResponse res) {
+		HomePage page = SpringUtils.getComponent(HomePage.class);
 		page.render();
+	}
+
+	@RequestMapping(value = "/exit", method = RequestMethod.GET)
+	public String doExit(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 }

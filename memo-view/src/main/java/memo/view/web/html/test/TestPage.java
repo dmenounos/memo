@@ -14,41 +14,47 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.web.html.test.grid;
+package memo.view.web.html.test;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import mojo.web.component.grid.GridComponent;
+import mojo.web.util.SpringUtils;
+
+import memo.view.web.html.base.BaseTemplate;
+import memo.view.web.html.test.grid.PersonGrid;
+import memo.view.web.html.test.grid.PetGrid;
 
 @Component
 @Scope("prototype")
-public class PersonGrid extends GridComponent<Person> {
+public class TestPage extends BaseTemplate {
 
-	@Autowired
-	private Database database;
+	private PersonGrid personGrid;
+	private PetGrid petGrid;
 
-	@PostConstruct
-	public void init() {
-		logger.debug("INIT {}", getClass().getName());
+	protected TestPage() {
+		personGrid = SpringUtils.getComponent(PersonGrid.class);
+		setPersonGrid(personGrid);
+		add(personGrid);
 
-		setTitle("Persons");
+		petGrid = SpringUtils.getComponent(PetGrid.class);
+		setPetGrid(petGrid);
+		add(petGrid);
+	}
 
-		Column column;
+	public PersonGrid getPersonGrid() {
+		return personGrid;
+	}
 
-		column = addColumn();
-		column.setName("firstName");
-		column.setLabel("First Name");
-		column.setWidth("50%");
+	public void setPersonGrid(PersonGrid personGrid) {
+		this.personGrid = personGrid;
+	}
 
-		column = addColumn();
-		column.setName("lastName");
-		column.setLabel("Last Name");
-		column.setWidth("50%");
+	public PetGrid getPetGrid() {
+		return petGrid;
+	}
 
-		initRecords(database.getPersons());
+	public void setPetGrid(PetGrid petGrid) {
+		this.petGrid = petGrid;
 	}
 }

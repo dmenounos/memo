@@ -4,7 +4,6 @@ html, body {
 
 html body {
 	overflow: hidden;
-	font-family: Arial, Helvetica, sans-serif;
 	background-color: #fdfcf8;
 	background-image: url(images/rough/back-10x260.jpg);
 	background-repeat: repeat-x;
@@ -30,19 +29,18 @@ a:hover {
 
 
 
-.container_12,
-.container_12 * {
+.container {
+	max-width: 970px;
+}
+
+.container .row .col * {
 	box-sizing: content-box;
 	-moz-box-sizing: content-box;
 }
 
 
 
-.headers {
-}
-
 #search {
-	height: 40px;
 	padding-top: 24px;
 }
 
@@ -61,8 +59,8 @@ a:hover {
 }
 
 .menu {
-	height: 32px;
 	padding: 16px 0;
+	overflow: hidden;
 }
 
 .menu .menu-item {
@@ -95,9 +93,7 @@ a:hover {
 	color: #ffef6a;
 }
 
-
-
-.footers {
+#footers {
 	position: absolute;
 	bottom: 0;
 	left: 0; right: 0;
@@ -105,9 +101,7 @@ a:hover {
 	text-align: center;
 }
 
-
-
-.body {
+#content {
 	position: absolute;
 	top: 64px; bottom: 20px;
 	left: 0; right: 0;
@@ -143,7 +137,11 @@ a:hover {
 
 
 
-.ajaxOverlay {
+.ajax-title {
+	display: none;	
+}
+
+.ajax-overlay {
 	display: none;
 	opacity: 0.3;
 	filter: alpha(opacity = 30);
@@ -154,7 +152,7 @@ a:hover {
 	z-index: 9998;
 }
 
-.ajaxIndicator {
+.ajax-indicator {
 	width: 64px; height: 64px;
 	background-image: url(images/ajax/clock-64.gif);
 	background-repeat: no-repeat;
@@ -164,4 +162,61 @@ a:hover {
 	margin-left: -32px;
 	margin-top: -32px;
 	z-index: 9999; 
+}
+
+
+
+.k-overlay {
+	/* opacity: 0.33 !important; */
+}
+
+.k-window .container {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	max-width: 660px;
+}
+
+.k-window .container * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.OpenIDPanel .buttonsPanel .btn {
+	width: 100px;
+	height: 50px;
+	padding: 0;
+	margin-right: 15px;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.OpenIDPanel .buttonsPanel .btn-google {
+	background-image: url(images/login/google.gif);
+}
+
+.OpenIDPanel .buttonsPanel .btn-yahoo {
+	background-image: url(images/login/yahoo.gif);
+}
+
+.OpenIDPanel .buttonsPanel .btn-openid {
+	background-image: url(images/login/openid.gif);
+}
+
+.OpenIDPanel .formPanel {
+	margin-top: 25px;
+}
+
+.OpenIDPanel .formPanel input {
+	padding-left: 32px;
+	background-image: url(images/login/openid.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+
+.OpenIDPanel .eastPanel {
+	border-radius: 10px;
+	background-color: #efefef;
 }
