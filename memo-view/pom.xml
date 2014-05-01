@@ -53,6 +53,7 @@
 				<directory>${project.basedir}/src/main/java</directory>
 				<includes>
 					<include>**/*.jsp</include>
+					<include>**/*.tag</include>
 				</includes>
 			</resource>
 

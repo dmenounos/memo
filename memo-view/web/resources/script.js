@@ -124,15 +124,11 @@ $(function() {
 $.ajaxSetup({
 
 	error: function(jqXHR, textStatus, errorThrown) {
-		if (jqXHR.status == 403) {
-			(new LoginPopup()).render();
-		} else {
-			(new ErrorPopup({
-				status: jqXHR.status,
-				statusText: jqXHR.statusText,
-				responseText: jqXHR.responseText
-			})).render();
-		}
+		(new ErrorPopup({
+			status: jqXHR.status,
+			statusText: jqXHR.statusText,
+			responseText: jqXHR.responseText
+		})).render();
 	}
 });
 

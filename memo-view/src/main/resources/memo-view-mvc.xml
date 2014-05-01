@@ -6,12 +6,12 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<import resource="classpath:mojo-web.xml" />
-	<context:component-scan base-package="memo.view.web" />
+	<context:component-scan base-package="memo.view" />
 
 	<!-- VIEW RESOLVERS -->
 
 	<!-- configures tiles -->
-	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles.xml</value>
@@ -20,7 +20,8 @@
 	</bean>
 
 	<!-- maps view names to tiles definitions -->
-	<bean class="org.springframework.web.servlet.view.tiles2.TilesViewResolver">
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 		<property name="order" value="0" />
 	</bean>
 
@@ -36,8 +37,8 @@
 		<property name="defaultErrorView" value="/web/any-exception" />
 		<property name="exceptionMappings">
 			<props>
-				<prop key="mojo.web.login.RequireLoginException">forward:/app/login/prompt</prop>
 				<prop key="mojo.web.core.WebException">/web/web-exception</prop>
+				<prop key="mojo.web.login.RequireLoginException">forward:/app/login/prompt</prop>
 			</props>
 		</property>
 	</bean>

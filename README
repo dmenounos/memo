@@ -49,8 +49,9 @@ Developing with Eclipse
    /src/main/java                                  WEB-INF/classes
    /src/main/resources                             WEB-INF/classes
 
-   Map the, maven resolved, jsp files:
+   Map the, maven resolved, jsp and tag files:
    /out/memo-view-1.0/WEB-INF/jsp                  WEB-INF/jsp
+   /out/memo-view-1.0/WEB-INF/tags                 WEB-INF/tags
 
 5. Open the "External Tool Configurations" and create one as such:
 

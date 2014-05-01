@@ -3,8 +3,8 @@
  */
 UIView = Backbone.View.extend({
 
-	initialize: function() {
-		$.extend(this, this.options);
+	initialize: function(options) {
+		$.extend(this, options);
 	},
 
 	/**
@@ -62,32 +62,6 @@ ServerView = UIView.extend({
 	 * Used in order to setup event handlers and control logic.
 	 */
 	setup: function() {
-	}
-});
-
-LoginPopup = UIView.extend({
-
-	render: function() {
-		$.ajax({
-			url: contextPath + "/app/login/prompt",
-			success: $.proxy(function(data, status, xhr) {
-				var $wrap = $("<div>" + data + "</div>");
-				var title = $(".ajax-title", $wrap);
-
-				this.win = this.getEl().kendoWindow({
-					title: title.html(),
-					modal: true,
-					deactivate: $.proxy(function() {
-						this.win.destroy();
-					}, this)
-				}).getKendoWindow();
-
-				this.getEl().html($wrap.html());
-
-				this.win.center();
-				this.win.open();
-			}, this)
-		});
 	}
 });
 

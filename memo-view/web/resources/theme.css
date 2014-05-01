@@ -172,6 +172,11 @@ a:hover {
 	/* opacity: 0.33 !important; */
 }
 
+.k-window-content {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
 .k-window .container {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -187,7 +192,23 @@ a:hover {
 
 
 
-.OpenIDLoginPrompt .buttons-panel .btn {
+.SimpleLoginComponent form {
+	margin: 10px 0;
+}
+
+.SimpleLoginComponent .info-panel {
+	padding: 0 15px;
+	border-radius: 10px;
+	background-color: #efefef;
+    overflow: hidden;
+	margin: 10px 0;
+}
+
+.SimpleLoginComponent .info-panel h3 {
+	margin-top: 10px;
+}
+
+.OpenIDLoginComponent .buttons-panel .btn {
 	width: 100px;
 	height: 50px;
 	padding: 0;
@@ -197,31 +218,37 @@ a:hover {
 	background-position: center center;
 }
 
-.OpenIDLoginPrompt .buttons-panel .btn-google {
+.OpenIDLoginComponent .buttons-panel .btn-google {
 	background-image: url(images/login/google.gif);
 }
 
-.OpenIDLoginPrompt .buttons-panel .btn-yahoo {
+.OpenIDLoginComponent .buttons-panel .btn-yahoo {
 	background-image: url(images/login/yahoo.gif);
 }
 
-.OpenIDLoginPrompt .buttons-panel .btn-openid {
+.OpenIDLoginComponent .buttons-panel .btn-openid {
 	background-image: url(images/login/openid.gif);
 }
 
-.OpenIDLoginPrompt .form-panel {
+.OpenIDLoginComponent .form-panel {
 	margin-top: 25px;
 }
 
-.OpenIDLoginPrompt .form-panel input {
+.OpenIDLoginComponent .form-panel input {
 	padding-left: 32px;
 	background-image: url(images/login/openid.png);
 	background-repeat: no-repeat;
 	background-position: left center;
 }
 
-.OpenIDLoginPrompt .info-panel {
+.OpenIDLoginComponent .info-panel {
 	padding: 0 15px;
 	border-radius: 10px;
 	background-color: #efefef;
+    overflow: hidden;
+	margin: 10px 0;
+}
+
+.OpenIDLoginComponent .info-panel h3 {
+	margin-top: 10px;
 }

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE tiles-definitions PUBLIC 
-	"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" 
-	"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
 
 	<!-- OPENID TEMPLATE -->
 
-	<definition name="openid-template" template="/WEB-INF/jsp/memo/view/web/OpenIDTemplate.jsp" />
+	<definition name="openid-template" template="/WEB-INF/jsp/memo/view/OpenIDTemplate.jsp" />
 
 	<definition name="/login/openid/setup" extends="openid-template">
-		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/web/html/login/OpenIDLoginController_doSetup.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/html/login/OpenIDLoginController_doSetup.jsp" />
 	</definition>
 
 	<definition name="/login/openid/verify" extends="openid-template">
-		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/web/html/login/OpenIDLoginController_doVerify.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/html/login/OpenIDLoginController_doVerify.jsp" />
 	</definition>
 
 	<!-- EXCEPTION TEMPLATE -->
 
-	<definition name="exception-template" template="/WEB-INF/jsp/memo/view/web/ExceptionTemplate.jsp" />
+	<definition name="exception-template" template="/WEB-INF/jsp/memo/view/ExceptionTemplate.jsp" />
 
-	<!-- view name defined in memo-domain-mvc.xml -->
+	<!-- view name defined in memo-view-mvc.xml -->
 	<definition name="/web/any-exception" extends="exception-template">
 		<put-attribute name="body" value="/WEB-INF/jsp/mojo/web/AnyException.jsp" />
 	</definition>
 
-	<!-- view name defined in memo-domain-mvc.xml -->
+	<!-- view name defined in memo-view-mvc.xml -->
 	<definition name="/web/web-exception" extends="exception-template">
 		<put-attribute name="body" value="/WEB-INF/jsp/mojo/web/WebException.jsp" />
 	</definition>

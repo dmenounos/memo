@@ -35,10 +35,17 @@
 			</patternset>
 		</unjar>
 
-		<!-- extract from sources folder -->
+		<!-- extract jsp files from sources folder -->
 		<copy todir="${web.dir}/WEB-INF/jsp">
 			<fileset dir="./src/main/java">
 				<include name="**/*.jsp" />
+			</fileset>
+		</copy>
+
+		<!-- extract tag files from sources folder -->
+		<copy todir="${web.dir}/WEB-INF/tags">
+			<fileset dir="./src/main/java">
+				<include name="**/*.tag" />
 			</fileset>
 		</copy>
 
