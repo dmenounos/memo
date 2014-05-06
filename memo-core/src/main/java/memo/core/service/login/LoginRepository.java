@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.service.login;
+package memo.core.service.login;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import memo.core.dao.model.misc.Country;
-import memo.core.dao.model.misc.Language;
-import memo.core.dao.model.user.OpenID;
-import memo.core.dao.model.user.User;
-import memo.core.dao.model.user.UserRole;
+import memo.core.model.misc.Country;
+import memo.core.model.misc.Language;
+import memo.core.model.user.OpenID;
+import memo.core.model.user.User;
+import memo.core.model.user.UserRole;
 
 @Repository
 public class LoginRepository {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.model.post;
+package memo.core.model.post;
 
 import java.util.Locale;
 
@@ -26,9 +26,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import memo.core.dao.model.AbstractEntity;
-import memo.core.dao.model.core.MountPoint;
-import memo.core.dao.model.core.Resource;
+import memo.core.model.AbstractEntity;
+import memo.core.model.core.MountPoint;
+import memo.core.model.core.Resource;
 
 @Entity
 @Table(name = "memo_post_info")

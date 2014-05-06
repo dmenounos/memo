@@ -84,6 +84,6 @@ $(function() {
 		}
 	});
 
-	(new OpenIDLoginPrompt({ el: ".OpenIDLoginPrompt" })).render();
+	(new OpenIDLoginPrompt({ el: ".${bean.id}" })).render();
 });
 </script>

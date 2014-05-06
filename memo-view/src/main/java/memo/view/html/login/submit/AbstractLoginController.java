@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.html.login;
+package memo.view.html.login.submit;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,12 +26,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import mojo.web.core.WebContext;
-import mojo.web.core.WebException;
+import mojo.view.core.WebContext;
+import mojo.view.core.WebException;
 
-import memo.core.dao.model.user.User;
-import memo.core.dao.model.user.User.Gender;
-import memo.core.dao.service.login.LoginService;
+import memo.core.model.user.User;
+import memo.core.model.user.User.Gender;
+import memo.core.service.login.LoginService;
 
 public class AbstractLoginController {
 
@@ -48,7 +48,7 @@ public class AbstractLoginController {
 	}
 
 	/**
-	 * Handles login (internally).
+	 * Initializes the session user attribute.
 	 */
 	protected void signIn(HttpSession session, User user) {
 		session.setAttribute(WebContext.CONTEXT_USER_ATTR, user);

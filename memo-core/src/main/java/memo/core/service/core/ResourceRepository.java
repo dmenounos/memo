@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.service.core;
+package memo.core.service.core;
 
 import java.util.List;
 
@@ -22,10 +22,10 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import mojo.dao.core.exec.JpaRepository;
+import mojo.core.exec.JpaRepository;
 
-import memo.core.dao.model.core.Permission;
-import memo.core.dao.model.core.Resource;
+import memo.core.model.core.Permission;
+import memo.core.model.core.Resource;
 
 @Repository
 public class ResourceRepository extends JpaRepository<Resource> {

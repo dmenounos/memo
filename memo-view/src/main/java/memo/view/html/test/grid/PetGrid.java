@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import mojo.web.component.grid.GridComponent;
+import mojo.view.component.grid.GridComponent;
 
 @Component
 @Scope("prototype")

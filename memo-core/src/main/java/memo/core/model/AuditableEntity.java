@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.model;
+package memo.core.model;
 
 import java.util.Date;
 
@@ -24,7 +24,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import memo.core.dao.model.user.User;
+import memo.core.model.user.User;
 
 @MappedSuperclass
 public class AuditableEntity extends AbstractEntity {

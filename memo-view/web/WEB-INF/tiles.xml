@@ -10,11 +10,11 @@
 	<definition name="openid-template" template="/WEB-INF/jsp/memo/view/OpenIDTemplate.jsp" />
 
 	<definition name="/login/openid/setup" extends="openid-template">
-		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/html/login/OpenIDLoginController_doSetup.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/html/login/submit/OpenIDLoginController_doSetup.jsp" />
 	</definition>
 
 	<definition name="/login/openid/verify" extends="openid-template">
-		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/html/login/OpenIDLoginController_doVerify.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/memo/view/html/login/submit/OpenIDLoginController_doVerify.jsp" />
 	</definition>
 
 	<!-- EXCEPTION TEMPLATE -->
@@ -23,12 +23,12 @@
 
 	<!-- view name defined in memo-view-mvc.xml -->
 	<definition name="/web/any-exception" extends="exception-template">
-		<put-attribute name="body" value="/WEB-INF/jsp/mojo/web/AnyException.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/mojo/view/AnyException.jsp" />
 	</definition>
 
 	<!-- view name defined in memo-view-mvc.xml -->
 	<definition name="/web/web-exception" extends="exception-template">
-		<put-attribute name="body" value="/WEB-INF/jsp/mojo/web/WebException.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/mojo/view/WebException.jsp" />
 	</definition>
 
 </tiles-definitions>

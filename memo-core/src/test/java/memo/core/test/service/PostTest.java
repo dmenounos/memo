@@ -19,10 +19,10 @@ package memo.core.test.service;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import mojo.dao.core.spec.Select;
+import mojo.core.spec.Select;
 
-import memo.core.dao.model.core.Resource;
-import memo.core.dao.service.core.ResourceService;
+import memo.core.model.core.Resource;
+import memo.core.service.core.ResourceService;
 import memo.core.test.BaseTest;
 
 public class PostTest extends BaseTest {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.model.core;
+package memo.core.model.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import memo.core.dao.model.AuditableEntity;
+import memo.core.model.AuditableEntity;
 
 @Entity
 @Table(name = "memo_resource")

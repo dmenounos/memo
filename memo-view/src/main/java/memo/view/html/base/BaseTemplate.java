@@ -16,7 +16,7 @@
  */
 package memo.view.html.base;
 
-import mojo.web.component.html.HtmlTemplate;
+import mojo.view.component.html.HtmlTemplate;
 
 public class BaseTemplate extends HtmlTemplate {
 

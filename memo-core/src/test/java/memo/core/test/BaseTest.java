@@ -29,13 +29,13 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import mojo.dao.AuditContext;
-import mojo.dao.core.Repository;
+import mojo.core.AuditContext;
+import mojo.core.Repository;
 
-import memo.core.dao.model.AbstractEntity;
-import memo.core.dao.model.user.User;
-import memo.core.dao.model.user.UserRole;
-import memo.core.dao.service.login.LoginService;
+import memo.core.model.AbstractEntity;
+import memo.core.model.user.User;
+import memo.core.model.user.UserRole;
+import memo.core.service.login.LoginService;
 import memo.core.test.util.SpringUtils;
 
 public abstract class BaseTest extends TestCase {

@@ -18,9 +18,9 @@ package memo.core.test.util;
 
 import java.util.Date;
 
-import mojo.dao.AuditContext;
+import mojo.core.AuditContext;
 
-import memo.core.dao.model.user.User;
+import memo.core.model.user.User;
 
 public class MockContext implements AuditContext {
 

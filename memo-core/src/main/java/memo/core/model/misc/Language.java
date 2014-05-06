@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.model.misc;
+package memo.core.model.misc;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import memo.core.dao.model.AbstractEntity;
+import memo.core.model.AbstractEntity;
 
 @Entity
 @Table(name = "memo_language")

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.html.login;
+package memo.view.html.login.submit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import memo.core.dao.model.user.User;
+import memo.core.model.user.User;
 
 @Controller
-@RequestMapping("/login/basic")
-public class BasicLoginController extends AbstractLoginController {
+@RequestMapping("/login/submit")
+public class DefaultLoginController extends AbstractLoginController {
 
 	private static final String USERNAME_PARAM = "username";
 

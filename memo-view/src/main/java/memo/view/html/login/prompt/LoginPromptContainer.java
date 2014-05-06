@@ -16,11 +16,12 @@
  */
 package memo.view.html.login.prompt;
 
-import memo.view.html.base.BaseTemplate;
-import mojo.web.util.SpringUtils;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import mojo.view.util.SpringUtils;
+
+import memo.view.html.base.BaseTemplate;
 
 @Component
 @Scope("prototype")

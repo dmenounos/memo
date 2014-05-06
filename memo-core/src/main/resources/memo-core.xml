@@ -7,19 +7,44 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<import resource="classpath:mojo-dao.xml" />
-	<context:component-scan base-package="memo.core.dao" />
+	<import resource="classpath:mojo-core.xml" />
+	<context:component-scan base-package="memo.core" />
 
-	<!-- 7.6 Proxying mechanisms -->
+	<bean id="auditContext" class="mojo.view.core.WebContext" />
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource">
+			<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+				<property name="driverClassName" value="org.postgresql.Driver" />
+				<property name="url" value="jdbc:postgresql://localhost:5432/memo" />
+				<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+				<!-- <property name="url" value="jdbc:mysql://localhost:3306/memo" /> -->
+				<property name="username" value="postgres" />
+				<property name="password" value="postgres" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="javax.persistence.validation.mode">none</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.ProgressDialect</prop>
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
 	<aop:config proxy-target-class="true">
 
 		<aop:aspect ref="auditAspect">
-			<aop:pointcut id="insertOperation" expression="execution(* *..dao..*Repository.insert(..)) and args(query)" />
+			<aop:pointcut id="insertOperation" expression="execution(* *..core..*Repository.insert(..)) and args(query)" />
 			<aop:before pointcut-ref="insertOperation" method="insert" />
 		</aop:aspect>
 
 		<aop:aspect ref="auditAspect">
-			<aop:pointcut id="updateOperation" expression="execution(* *..dao..*Repository.update(..)) and args(query)" />
+			<aop:pointcut id="updateOperation" expression="execution(* *..core..*Repository.update(..)) and args(query)" />
 			<aop:before pointcut-ref="updateOperation" method="update" />
 		</aop:aspect>
 
@@ -27,49 +52,49 @@
 
 	<!-- GENERIC REPOSITORIES -->
 
-	<bean id="countryRepository" class="mojo.dao.core.exec.JpaRepository">
-		<property name="entityType" value="memo.core.dao.model.misc.Country" />
+	<bean id="countryRepository" class="mojo.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.model.misc.Country" />
 	</bean>
 
-	<bean id="languageRepository" class="mojo.dao.core.exec.JpaRepository">
-		<property name="entityType" value="memo.core.dao.model.misc.Language" />
+	<bean id="languageRepository" class="mojo.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.model.misc.Language" />
 	</bean>
 
-	<bean id="userRepository" class="mojo.dao.core.exec.JpaRepository">
-		<property name="entityType" value="memo.core.dao.model.user.User" />
+	<bean id="userRepository" class="mojo.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.model.user.User" />
 	</bean>
 
-	<bean id="userRoleRepository" class="mojo.dao.core.exec.JpaRepository">
-		<property name="entityType" value="memo.core.dao.model.user.UserRole" />
+	<bean id="userRoleRepository" class="mojo.core.exec.JpaRepository">
+		<property name="entityType" value="memo.core.model.user.UserRole" />
 	</bean>
 
 	<!-- GENERIC SERVICES -->
 
-	<bean id="countryService" class="mojo.dao.core.DataService">
+	<bean id="countryService" class="mojo.core.DataService">
 		<property name="repository" ref="countryRepository" />
 		<property name="validation">
-			<bean class="memo.core.dao.validation.CountryValidation" />
+			<bean class="memo.core.validation.CountryValidation" />
 		</property>
 	</bean>
 
-	<bean id="languageService" class="mojo.dao.core.DataService">
+	<bean id="languageService" class="mojo.core.DataService">
 		<property name="repository" ref="languageRepository" />
 		<property name="validation">
-			<bean class="memo.core.dao.validation.LanguageValidation" />
+			<bean class="memo.core.validation.LanguageValidation" />
 		</property>
 	</bean>
 
-	<bean id="userService" class="mojo.dao.core.DataService">
+	<bean id="userService" class="mojo.core.DataService">
 		<property name="repository" ref="userRepository" />
 		<property name="validation">
-			<bean class="memo.core.dao.validation.UserValidation" />
+			<bean class="memo.core.validation.UserValidation" />
 		</property>
 	</bean>
 
-	<bean id="userRoleService" class="mojo.dao.core.DataService">
+	<bean id="userRoleService" class="mojo.core.DataService">
 		<property name="repository" ref="userRoleRepository" />
 		<property name="validation">
-			<bean class="memo.core.dao.validation.UserRoleValidation" />
+			<bean class="memo.core.validation.UserRoleValidation" />
 		</property>
 	</bean>
 

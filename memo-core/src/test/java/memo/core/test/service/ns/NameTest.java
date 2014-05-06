@@ -19,8 +19,8 @@ package memo.core.test.service.ns;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import memo.core.dao.model.core.ns.IName;
-import memo.core.dao.service.core.ns.Name;
+import memo.core.model.core.ns.IName;
+import memo.core.service.core.ns.Name;
 import memo.core.test.BaseTest;
 
 public class NameTest extends BaseTest {

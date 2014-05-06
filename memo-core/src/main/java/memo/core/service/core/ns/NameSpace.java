@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.service.core.ns;
+package memo.core.service.core.ns;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -25,11 +25,11 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import memo.core.dao.model.core.MountPoint;
-import memo.core.dao.model.core.Resource;
-import memo.core.dao.model.core.ns.IName;
-import memo.core.dao.model.core.ns.INameSpace;
-import memo.core.dao.service.core.ResourceService;
+import memo.core.model.core.MountPoint;
+import memo.core.model.core.Resource;
+import memo.core.model.core.ns.IName;
+import memo.core.model.core.ns.INameSpace;
+import memo.core.service.core.ResourceService;
 
 /**
  * Concrete NameSpace implementation.

@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import mojo.dao.core.DataPage;
-import mojo.dao.core.DataService;
-import mojo.dao.core.spec.Select;
+import mojo.core.DataPage;
+import mojo.core.DataService;
+import mojo.core.spec.Select;
 
-import memo.core.dao.model.misc.Language;
+import memo.core.model.misc.Language;
 
 @Controller
 @RequestMapping("/misc/language")

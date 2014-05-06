@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<import resource="classpath:mojo-web.xml" />
+	<import resource="classpath:mojo-view.xml" />
 	<context:component-scan base-package="memo.view" />
 
 	<!-- VIEW RESOLVERS -->
@@ -37,8 +37,8 @@
 		<property name="defaultErrorView" value="/web/any-exception" />
 		<property name="exceptionMappings">
 			<props>
-				<prop key="mojo.web.core.WebException">/web/web-exception</prop>
-				<prop key="mojo.web.login.RequireLoginException">forward:/app/login/prompt</prop>
+				<prop key="mojo.view.core.WebException">/web/web-exception</prop>
+				<prop key="mojo.view.login.RequireLoginException">forward:/app/login/prompt</prop>
 			</props>
 		</property>
 	</bean>
@@ -55,8 +55,8 @@
 		<property name="interceptors">
 			<list>
 				<ref bean="localeChangeInterceptor" />
-				<bean class="mojo.web.core.WebContextInterceptor" />
-				<bean class="mojo.web.login.RequireLoginInterceptor" />
+				<bean class="mojo.view.core.WebContextInterceptor" />
+				<bean class="mojo.view.login.RequireLoginInterceptor" />
 			</list>
 		</property>
 	</bean>
@@ -88,30 +88,30 @@
 	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
 		<property name="converters">
 			<list>
-				<bean class="mojo.dao.core.util.XHProxyConverter" />
-				<bean class="mojo.dao.core.util.XHCollectionConverter" />
+				<bean class="mojo.core.util.XHProxyConverter" />
+				<bean class="mojo.core.util.XHCollectionConverter" />
 			</list>
 		</property>
 		<property name="aliases">
 			<map>
 
-				<entry key="DataPage"   value="mojo.dao.core.DataPage" />
-				<entry key="Batch"      value="mojo.dao.core.spec.Batch" />
-				<entry key="ByKey"      value="mojo.dao.core.spec.ByKey" />
-				<entry key="ByText"     value="mojo.dao.core.spec.ByText" />
-				<entry key="Select"     value="mojo.dao.core.spec.Select" />
-				<entry key="Insert"     value="mojo.dao.core.spec.Insert" />
-				<entry key="Update"     value="mojo.dao.core.spec.Update" />
-				<entry key="Delete"     value="mojo.dao.core.spec.Delete" />
+				<entry key="DataPage"   value="mojo.core.DataPage" />
+				<entry key="Batch"      value="mojo.core.spec.Batch" />
+				<entry key="ByKey"      value="mojo.core.spec.ByKey" />
+				<entry key="ByText"     value="mojo.core.spec.ByText" />
+				<entry key="Select"     value="mojo.core.spec.Select" />
+				<entry key="Insert"     value="mojo.core.spec.Insert" />
+				<entry key="Update"     value="mojo.core.spec.Update" />
+				<entry key="Delete"     value="mojo.core.spec.Delete" />
 
-				<entry key="Permission" value="memo.core.dao.model.core.Permission" />
-				<entry key="Resource"   value="memo.core.dao.model.core.Resource" />
-				<entry key="Country"    value="memo.core.dao.model.misc.Country" />
-				<entry key="Language"   value="memo.core.dao.model.misc.Language" />
-				<entry key="PostRule"   value="memo.core.dao.model.post.PostInfo" />
-				<entry key="OpenID"     value="memo.core.dao.model.user.OpenID" />
-				<entry key="User"       value="memo.core.dao.model.user.User" />
-				<entry key="UserRole"   value="memo.core.dao.model.user.UserRole" />
+				<entry key="Permission" value="memo.core.model.core.Permission" />
+				<entry key="Resource"   value="memo.core.model.core.Resource" />
+				<entry key="Country"    value="memo.core.model.misc.Country" />
+				<entry key="Language"   value="memo.core.model.misc.Language" />
+				<entry key="PostRule"   value="memo.core.model.post.PostInfo" />
+				<entry key="OpenID"     value="memo.core.model.user.OpenID" />
+				<entry key="User"       value="memo.core.model.user.User" />
+				<entry key="UserRole"   value="memo.core.model.user.UserRole" />
 
 			</map>
 		</property>

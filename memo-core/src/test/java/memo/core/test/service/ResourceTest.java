@@ -28,14 +28,14 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import mojo.dao.core.Repository;
-import mojo.dao.core.spec.Delete;
-import mojo.dao.core.spec.Insert;
+import mojo.core.Repository;
+import mojo.core.spec.Delete;
+import mojo.core.spec.Insert;
 
-import memo.core.dao.model.core.Permission;
-import memo.core.dao.model.core.Resource;
-import memo.core.dao.service.core.PermissionService;
-import memo.core.dao.service.core.ResourceService;
+import memo.core.model.core.Permission;
+import memo.core.model.core.Resource;
+import memo.core.service.core.PermissionService;
+import memo.core.service.core.ResourceService;
 import memo.core.test.BaseTest;
 
 public class ResourceTest extends BaseTest {

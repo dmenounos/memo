@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.service.core.ns;
+package memo.core.service.core.ns;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import memo.core.dao.model.core.ns.IName;
+import memo.core.model.core.ns.IName;
 
 /**
  * Abstract Name implementation.

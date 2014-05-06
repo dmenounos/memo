@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import mojo.web.util.SpringUtils;
+import mojo.view.util.SpringUtils;
 
 @Controller
 public class HomeController {

@@ -23,8 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import mojo.web.login.RequireLogin;
-import mojo.web.util.SpringUtils;
+import mojo.view.login.RequireLogin;
+import mojo.view.util.SpringUtils;
 
 @Controller
 @RequireLogin

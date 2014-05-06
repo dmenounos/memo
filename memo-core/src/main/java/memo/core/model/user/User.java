@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.model.user;
+package memo.core.model.user;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,9 +32,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import memo.core.dao.model.AbstractEntity;
-import memo.core.dao.model.misc.Country;
-import memo.core.dao.model.misc.Language;
+import memo.core.model.AbstractEntity;
+import memo.core.model.misc.Country;
+import memo.core.model.misc.Language;
 
 @Entity
 @Table(name = "memo_user")

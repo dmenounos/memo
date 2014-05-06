@@ -8,14 +8,14 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>memo.core.dao.model.core.Permission</class>
-		<class>memo.core.dao.model.core.Resource</class>
-		<class>memo.core.dao.model.misc.Country</class>
-		<class>memo.core.dao.model.misc.Language</class>
-		<class>memo.core.dao.model.post.PostInfo</class>
-		<class>memo.core.dao.model.user.OpenID</class>
-		<class>memo.core.dao.model.user.User</class>
-		<class>memo.core.dao.model.user.UserRole</class>
+		<class>memo.core.model.core.Permission</class>
+		<class>memo.core.model.core.Resource</class>
+		<class>memo.core.model.misc.Country</class>
+		<class>memo.core.model.misc.Language</class>
+		<class>memo.core.model.post.PostInfo</class>
+		<class>memo.core.model.user.OpenID</class>
+		<class>memo.core.model.user.User</class>
+		<class>memo.core.model.user.UserRole</class>
 
 		<exclude-unlisted-classes />
 

@@ -19,7 +19,8 @@ package memo.view.html.test;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import mojo.web.util.SpringUtils;
+import mojo.view.util.SpringUtils;
+
 import memo.view.html.base.BaseTemplate;
 import memo.view.html.test.grid.PersonGrid;
 import memo.view.html.test.grid.PetGrid;

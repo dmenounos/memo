@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao;
+package memo.core;
 
 import java.util.Date;
 
@@ -22,12 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import mojo.dao.AuditContext;
-import mojo.dao.core.spec.Insert;
-import mojo.dao.core.spec.Update;
+import mojo.core.AuditContext;
+import mojo.core.spec.Insert;
+import mojo.core.spec.Update;
 
-import memo.core.dao.model.AuditableEntity;
-import memo.core.dao.model.user.User;
+import memo.core.model.AuditableEntity;
+import memo.core.model.user.User;
 
 @Component
 public class AuditAspect {

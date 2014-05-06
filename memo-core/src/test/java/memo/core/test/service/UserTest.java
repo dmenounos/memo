@@ -21,12 +21,12 @@ import java.util.Date;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import mojo.dao.core.DataService;
+import mojo.core.DataService;
 
-import memo.core.dao.model.misc.Country;
-import memo.core.dao.model.misc.Language;
-import memo.core.dao.model.user.User;
-import memo.core.dao.model.user.User.Gender;
+import memo.core.model.misc.Country;
+import memo.core.model.misc.Language;
+import memo.core.model.user.User;
+import memo.core.model.user.User.Gender;
 import memo.core.test.BaseTest;
 
 public class UserTest extends BaseTest {

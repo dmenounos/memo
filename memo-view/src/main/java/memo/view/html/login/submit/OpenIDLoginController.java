@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.view.html.login;
+package memo.view.html.login.submit;
 
 import java.util.Map;
 
@@ -27,21 +27,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import mojo.web.core.WebContext;
-import mojo.web.openid.OpenIDService;
-import mojo.web.openid.OpenIDService.RequestData;
-import mojo.web.openid.OpenIDService.ResponseData;
+import mojo.view.core.WebContext;
+import mojo.view.openid.OpenIDService;
+import mojo.view.openid.OpenIDService.RequestData;
+import mojo.view.openid.OpenIDService.ResponseData;
 
-import memo.core.dao.model.user.User;
+import memo.core.model.user.User;
 
 @Controller
 @RequestMapping("/login/openid")
 public class OpenIDLoginController extends AbstractLoginController {
 
-	private static final String DISCOVERY_ATTR = "openidDiscovery";
-	private static final String IDENTIFIER_ATTR = "openidIdentifier";
-
 	private static final String IDENTIFIER_PARAM = "openid_identifier";
+
+	private static final String DISCOVERY_ATTR   = "openidDiscovery";
+	private static final String IDENTIFIER_ATTR  = "openidIdentifier";
 
 	@Autowired
 	@Qualifier("openidService")

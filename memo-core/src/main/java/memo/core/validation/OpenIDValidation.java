@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package memo.core.dao.validation;
+package memo.core.validation;
 
 import java.util.List;
 
-import mojo.dao.core.Validation;
+import mojo.core.Validation;
 
-import memo.core.dao.model.user.OpenID;
+import memo.core.model.user.OpenID;
 
 public class OpenIDValidation extends Validation<OpenID> {
 

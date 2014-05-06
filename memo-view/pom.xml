@@ -23,7 +23,7 @@
 
 		<dependency>
 			<groupId>mojo</groupId>
-			<artifactId>mojo-web</artifactId>
+			<artifactId>mojo-view</artifactId>
 		</dependency>
 
 		<dependency>
