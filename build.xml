@@ -22,7 +22,7 @@
 			<map from="/" to="" />
 		</pathconvert>
 
-		<!-- extract from jar files -->
+		<!-- extract jsp files from jar files -->
 		<unjar dest="${web.dir}/WEB-INF/jsp">
 			<fileset dir="/" includes="${classpath.string}">
 				<or>

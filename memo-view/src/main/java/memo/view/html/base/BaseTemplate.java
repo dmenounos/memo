@@ -29,8 +29,6 @@ public class BaseTemplate extends HtmlTemplate {
 		getStyles().add(contextPath + "/bootstrap/css/bootstrap.css");
 		getStyles().add(contextPath + "/kendoui/styles/kendo.common-bootstrap.min.css");
 		getStyles().add(contextPath + "/kendoui/styles/kendo.bootstrap.min.css");
-		// getStyles().add(contextPath + "/kendoui/styles/kendo.common.min.css");
-		// getStyles().add(contextPath + "/kendoui/styles/kendo.default.min.css");
 		getStyles().add(contextPath + "/resources/theme.css");
 
 		// Init javascript files.
